@@ -2,7 +2,68 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party File Page</title>
+    <style>
+        /* CSS 통합 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .upload-section {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .upload-section.drag-over {
+            border-color: #007bff;
+            background-color: #f9f9f9;
+        }
+        .file-list {
+            margin-top: 20px;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .file-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+        .delete-button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: #cc0000;
+        }
+        .button-upload {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button-upload:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <!-- 네비게이션 바 -->
@@ -23,5 +84,108 @@
 
     <h1>Party File Page</h1>
     <p>파일 관련 콘텐츠를 여기에 추가하세요.</p>
+
+    <!-- 파일 공유 섹션 -->
+    <h1>File Sharing</h1>
+    <div class="upload-section" id="drop-zone">
+        <p>Drag and drop your files here</p>
+        <p>or</p>
+        <button class="button-upload" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+        <input type="file" id="fileInput" style="display: none;">
+    </div>
+    <div class="file-list" id="fileList">
+        <h2>Uploaded Files</h2>
+        <!-- File list will be dynamically loaded -->
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        // 동적으로 partyId를 groupId로 설정
+        const groupId = /*[[${party.partyId}]]*/ 0;
+
+        // Drag and drop event listeners
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const file = event.dataTransfer.files[0];
+            uploadFile(file);
+        });
+
+        // File input change event
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            uploadFile(file);
+        });
+
+        // Upload file function
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('group', groupId);
+
+            fetch('/files/upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+              .then(data => {
+                  alert(data);
+                  loadUploadedFiles();
+              }).catch(err => alert('File upload failed: ' + err));
+        }
+
+        // Load uploaded files function
+        function loadUploadedFiles() {
+            fetch(`/files?group=${groupId}`)
+                .then(response => response.json())
+                .then(files => {
+                    fileList.innerHTML = '<h2>Uploaded Files</h2>';
+                    files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+
+                        const fileLink = document.createElement('a');
+                        fileLink.href = `/files/download/${file.id}`;
+                        fileLink.textContent = file.name;
+                        fileItem.appendChild(fileLink);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.className = 'delete-button';
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.onclick = () => deleteFile(file.id);
+                        fileItem.appendChild(deleteButton);
+
+                        fileList.appendChild(fileItem);
+                    });
+                }).catch(err => alert('Failed to load files: ' + err));
+        }
+
+        // Delete file function
+        function deleteFile(fileId) {
+            fetch(`/files/delete/${fileId}`, {
+                method: 'DELETE'
+            }).then(response => response.text())
+              .then(data => {
+                  alert(data);
+                  loadUploadedFiles();
+              }).catch(err => alert('Failed to delete file: ' + err));
+        }
+
+        // Load uploaded files on page load
+        window.onload = () => {
+            loadUploadedFiles();
+        };
+    </script>
 </body>
 </html>
