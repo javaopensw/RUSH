@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <!-- CSS 파일 포함 -->
+    <link rel="stylesheet" href="/images/joinstyles.css">
 </head>
 <body>
-    <a href="/index">Go index</a>
+<div class="container">
+    <a href="/index" class="text-center">Go index</a>
     <h1>Login</h1>
 
     <!-- 로그인 폼 -->
     <form action="/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br><br>
-        <button type="submit">Login</button>
+        <label for="email"></label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <br>
+        <label for="password"></label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <br>
+        <button type="submit" class="btn">Login</button>
     </form>
+
+    <!-- 회원가입 링크 -->
+    <p>
+        <a href="/userCreate">아직 회원이 아니신가요?</a>
+    </p>
+    <p>
+        <a href="/userFind">비밀번호를 잊으셨나요?</a>
+    </p>
 
     <!-- 로그인 실패 메시지 표시 -->
     <div th:if="${error != null}">
         <p th:text="${error}"></p>
     </div>
+</div>
 </body>
 </html>
