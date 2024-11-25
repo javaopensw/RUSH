@@ -2,6 +2,12 @@ package TTT.RUSH.JDBC.dao;
 
 import TTT.RUSH.JDBC.entity.FileSharingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -12,6 +18,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Repository
 public class FileSharingRepository {
@@ -64,6 +72,37 @@ public class FileSharingRepository {
         if (rowsAffected == 0) {
             throw new IllegalArgumentException("File not found with ID: " + fileId);
         }
+    }
+
+    // 파일 다운로드
+    public ResponseEntity<Resource> downloadFile(Long fileId) {
+        String sql = "SELECT * FROM file_sharing_info WHERE id = ?";
+        List<FileSharingInfo> result = jdbcTemplate.query(sql, new FileSharingInfoRowMapper(), fileId);
+
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("File not found with ID: " + fileId);
+        }
+
+        FileSharingInfo fileSharingInfo = result.get(0);
+        try{
+            // 파일 데이터와 파일 이름 가져오기
+            byte[] fileData = fileSharingInfo.getFileData();
+            String fileName = fileSharingInfo.getFileName();
+
+            // 파일 데이터를 ByteArrayResource로 변환
+            ByteArrayResource resource = new ByteArrayResource(fileData);
+
+            // HTTP 응답 생성
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .contentLength(fileData.length)
+                    .body(resource);
+        } catch (Exception e) {
+            // 예외 발생 시 500 Internal Server Error 반환
+            return ResponseEntity.internalServerError()
+                    .body(null);
+        }  
     }
 
     // RowMapper 구현
