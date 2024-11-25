@@ -3,29 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <!-- CSS 파일 포함 -->
+    <link rel="stylesheet" href="/images/joinstyles.css">
 </head>
 <body>
-    <a href="/index">Go index</a>
+<div class="container">
+    <a href="/index" class="text-center">Go index</a>
     <h1>Create New User</h1>
-    
+
     <!-- 사용자 정보를 입력받는 폼 -->
     <form action="/createUser" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required />
-        <br><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <br><br>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-        <br><br>
-        
-        <button type="submit">Create User</button>
+        <label for="username"></label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required />
+        <br>
+
+        <label for="password"></label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <br>
+
+        <label for="email"></label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        <br>
+
+        <button type="submit" class="btn">Create User</button>
     </form>
-    
+
+    <p>
+        <a href="/login">이미 계정이 있으신가요?</a>
+    </p>
     <!-- 뒤로 가기 버튼 -->
-    <a href="/index">Go back</a>
+    <p>
+        <a href="/index">Go back</a>
+    </p>
+</div>
 </body>
 </html>
