@@ -27,9 +27,9 @@ public class FileSharingController {
     }
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("groupId") Long groupId) {
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("partyId") Long partyId) {
         try {
-            fileSharingService.saveFile(file, groupId);
+            fileSharingService.saveFile(file, partyId);
             return "File uploaded successfully!";
         } catch (IOException e) {
             return "Error occurred while uploading file: " + e.getMessage();

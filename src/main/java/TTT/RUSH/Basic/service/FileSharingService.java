@@ -23,8 +23,8 @@ public class FileSharingService {
         return fileSharingRepository.getFileSharingInfoByPartyId(partyId);
     }
 
-    public void saveFile(MultipartFile file, Long groupId) throws IOException {
-        fileSharingRepository.saveFile(file, groupId);
+    public void saveFile(MultipartFile file, Long partyId) throws IOException {
+        fileSharingRepository.saveFile(file, partyId);
     }
 
     public FileSharingInfo getFileByFileName(String fileName) {

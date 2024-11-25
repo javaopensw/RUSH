@@ -32,11 +32,11 @@ public class FileSharingRepository {
     }
 
     // 파일 저장
-    public void saveFile(MultipartFile file, Long groupId) throws IOException {
+    public void saveFile(MultipartFile file, Long partyId) throws IOException {
         String sql = "INSERT INTO file_sharing_info (party_id, file_name, file_data, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
-                groupId,
+                partyId,
                 file.getOriginalFilename(),
                 file.getBytes(),
                 LocalDateTime.now(),
@@ -72,7 +72,7 @@ public class FileSharingRepository {
         public FileSharingInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
             FileSharingInfo fileSharingInfo = new FileSharingInfo();
             fileSharingInfo.setId(rs.getLong("id"));
-            fileSharingInfo.setGroupId(rs.getLong("party_id"));
+            fileSharingInfo.setPartyId(rs.getLong("party_id"));
             fileSharingInfo.setFileName(rs.getString("file_name"));
             fileSharingInfo.setFileData(rs.getBytes("file_data"));
             fileSharingInfo.setCreatedAt(rs.getTimestamp("created_at"));

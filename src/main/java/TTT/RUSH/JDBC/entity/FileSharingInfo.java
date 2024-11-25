@@ -26,11 +26,11 @@ public class FileSharingInfo {
         this.id = id;
     }
 
-    public Long getGroupId(){
+    public Long getPartyId(){
         return this.partyId;
     }
 
-    public void setGroupId(Long partyId){
+    public void setPartyId(Long partyId){
         this.partyId = partyId;
     }
 
