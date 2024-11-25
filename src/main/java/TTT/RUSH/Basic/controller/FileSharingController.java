@@ -3,58 +3,51 @@ package TTT.RUSH.Basic.controller;
 import TTT.RUSH.JDBC.entity.FileSharingInfo;
 import TTT.RUSH.Basic.service.FileSharingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/file-sharing")
 public class FileSharingController {
 
     @Autowired
     private FileSharingService fileSharingService;
 
-    // 파일 업로드
+    @GetMapping("/all")
+    public List<FileSharingInfo> getAllFileSharingInfo() {
+        return fileSharingService.getAllFileSharingInfo();
+    }
+
+    @GetMapping("/party/{partyId}")
+    public List<FileSharingInfo> getFileSharingInfoByPartyId(@PathVariable Long partyId) {
+        return fileSharingService.getFileSharingInfoByPartyId(partyId);
+    }
+
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("groupId") Long groupId) {
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("groupId") Long groupId) {
         try {
             fileSharingService.saveFile(file, groupId);
-            return ResponseEntity.ok("File uploaded successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to upload file: " + e.getMessage());
+            return "File uploaded successfully!";
+        } catch (IOException e) {
+            return "Error occurred while uploading file: " + e.getMessage();
         }
     }
 
-    // 파일 다운로드
-    @GetMapping("/download/{fileId}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId) {
-        try {
-            FileSharingInfo fileInfo = fileSharingService.getFileById(fileId);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileInfo.getFileName() + "\"")
-                    .body(fileInfo.getFileData());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+    @GetMapping("/file")
+    public FileSharingInfo getFileByFileName(@RequestParam String fileName) {
+        return fileSharingService.getFileByFileName(fileName);
     }
 
-    // 파일 삭제
     @DeleteMapping("/delete/{fileId}")
-    public ResponseEntity<String> deleteFile(@PathVariable Long fileId) {
+    public String deleteFile(@PathVariable Long fileId) {
         try {
             fileSharingService.deleteFile(fileId);
-            return ResponseEntity.ok("File deleted successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to delete file: " + e.getMessage());
+            return "File deleted successfully!";
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
         }
     }
 }

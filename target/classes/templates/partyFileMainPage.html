@@ -78,8 +78,8 @@
     <div>
         <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
         <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
+        <p th:text="'Username: ' + ${user.username}">Username</p>
+        <p th:text="'Email: ' + ${user.email}">Email</p>
     </div>
 
     <h1>Party File Page</h1>
@@ -103,8 +103,8 @@
         const fileInput = document.getElementById('fileInput');
         const fileList = document.getElementById('fileList');
 
-        // 동적으로 partyId를 groupId로 설정
-        const groupId = /*[[${party.partyId}]]*/ 0;
+        // 동적으로 partyId를 설정
+        const partyId = /*[[${party.partyId}]]*/ 0;
 
         // Drag and drop event listeners
         dropZone.addEventListener('dragover', (event) => {
@@ -133,9 +133,9 @@
         function uploadFile(file) {
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('group', groupId);
+            formData.append('partyId', partyId);
 
-            fetch('/files/upload', {
+            fetch('/file-sharing/upload', { // 컨트롤러에 맞게 경로 수정
                 method: 'POST',
                 body: formData
             }).then(response => response.text())
@@ -147,7 +147,7 @@
 
         // Load uploaded files function
         function loadUploadedFiles() {
-            fetch(`/files?group=${groupId}`)
+            fetch(`/file-sharing/all?partyId=${partyId}`) // 컨트롤러에 맞게 경로 수정
                 .then(response => response.json())
                 .then(files => {
                     fileList.innerHTML = '<h2>Uploaded Files</h2>';
@@ -156,8 +156,8 @@
                         fileItem.className = 'file-item';
 
                         const fileLink = document.createElement('a');
-                        fileLink.href = `/files/download/${file.id}`;
-                        fileLink.textContent = file.name;
+                        fileLink.href = `/file-sharing/download/${file.id}`; // 다운로드 경로 수정
+                        fileLink.textContent = file.fileName;
                         fileItem.appendChild(fileLink);
 
                         const deleteButton = document.createElement('button');
@@ -173,7 +173,7 @@
 
         // Delete file function
         function deleteFile(fileId) {
-            fetch(`/files/delete/${fileId}`, {
+            fetch(`/file-sharing/delete/${fileId}`, { // 삭제 경로 수정
                 method: 'DELETE'
             }).then(response => response.text())
               .then(data => {

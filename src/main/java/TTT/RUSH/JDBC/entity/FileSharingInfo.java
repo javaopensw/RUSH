@@ -1,31 +1,21 @@
 package TTT.RUSH.JDBC.entity;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import jakarta.persistence.*;
-@Entity
-@Table(name = "files")
+
 public class FileSharingInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     private Long id;
 
-    @Column(nullable = false)
-    private Long groupId;//그룹 id
+    private Long partyId;//그룹 id
 
-    @Column(nullable = false)
     private String fileName;//파일 이름
 
-    @Lob
     private byte[] fileData;//파일 바이너리
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue
-    private Date createdDate; // 파일 추가 날짜
+    private Date createdAt; // 파일 추가 날짜
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date updatedDate; // 업데이트 날짜
+    private Date updatedAt; // 업데이트 날짜
 
     // Getters and Setters
     public Long getId() {
@@ -37,11 +27,11 @@ public class FileSharingInfo {
     }
 
     public Long getGroupId(){
-        return this.groupId;
+        return this.partyId;
     }
 
-    public void setGroupId(Long groupId){
-        this.groupId = groupId;
+    public void setGroupId(Long partyId){
+        this.partyId = partyId;
     }
 
     public String getFileName() {
@@ -60,19 +50,19 @@ public class FileSharingInfo {
         this.fileData = fileData;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(Date createdDate) {
+        this.createdAt = createdDate;
     }
 
-    public Date getUpdatedDate() {
-        return updatedDate;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
