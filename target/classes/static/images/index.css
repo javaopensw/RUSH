@@ -138,3 +138,14 @@ header h1 {
             font-size: 14px;
             color: #f0e6d2;
         }
+  .background {
+      position: fixed; /* 화면 고정 */
+      top: 0; /* 화면 상단부터 시작 */
+      left: 0; /* 화면 왼쪽부터 시작 */
+      width: 100%; /* 화면 전체 너비 */
+      height: 100%; /* 화면 전체 높이 */
+      z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+      background: url('image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+      background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+      filter: blur(8px); /* 블러 효과 적용 */
+  }
