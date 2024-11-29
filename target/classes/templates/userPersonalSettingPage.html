@@ -15,7 +15,18 @@
     <br>
 
     <a href="/userPersonalInfoEditPage">Edit Personal Info</a>
-    <br><br>
+	<h2>Your Parties</h2>
+	<ul>
+	    <li th:each="party : ${parties}">
+	        <a th:href="'/partyBoardMainPage/' + ${party.partyId}" th:text="${party.partyName}"></a>
+	        <!-- 파티 삭제 버튼 -->
+	        <form th:action="@{/deleteParty}" method="post" style="display:inline;">
+	            <input type="hidden" name="partyId" th:value="${party.partyId}">
+	            <button type="submit">Delete</button>
+	        </form>
+	    </li>
+	</ul>
+
 
 </body>
 </html>
