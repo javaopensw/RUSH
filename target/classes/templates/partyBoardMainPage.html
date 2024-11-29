@@ -1,38 +1,89 @@
-<!-- partyBoardMainPage.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party Board</title>
+    <!-- CSS 파일 포함 -->
+    <link rel="stylesheet" href="/images/nav.css">
+    <link rel="stylesheet" href="/images/Header.css">
+    <link rel="stylesheet" href="/images/partyBoardMainStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-        <!-- 네비게이션 바  여기있는건 다른곳과 다름  -->
-	<div class="navbar">
-	    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
-	    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
-	    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
-	    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
-	    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
-	</div>
-    
-    <!-- 현재 파티 정보 -->
-    <div>
-        <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
-        <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
-    </div>
-    <!-- 게시글 목록 -->
-    <h2>Posts</h2>
-    <ul>
-        <th:block th:each="post : ${posts}">
-            <li>
-                <a th:href="@{'/partyBoardViewPage/' + ${post.postId}}"
-                   th:text="${post.title}">Post Title</a>
-            </li>
-        </th:block>
-    </ul>
-    <!-- 새 게시글 작성 -->
-    <a href="/partyBoardCreatePage">Create New Post</a>
+	<!-- 블러 처리된 배경 -->
+	<div class="background"></div>
+    <!-- 헤더 -->
+    <header>
+        <h1>Study Village</h1>
+        <div class="auth-buttons">
+            <button onclick="window.location.href='/index';">Logout</button>
+        </div>
+        <div class="profile-container">
+            <i class="fas fa-user-circle profile-icon"></i>
+        </div>
+    </header>
+
+    <!-- 네비게이션 바 -->
+    <nav>
+        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">Board</a>
+        <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">Game</a>
+        <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">Chat</a>
+        <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">File</a>
+        <a th:href="@{'/partySettingPage/' + ${party.partyId}}">Settings</a>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <!-- 현재 파티 정보 -->
+        <section class="party-info">
+            <h2 th:text="${party.partyName}">Party Name</h2>
+        </section>
+
+		<!-- 게시글 목록 -->
+		<section class="post-list">
+		    <table>
+		        <thead>
+		            <tr>
+		                <th>Post ID</th>
+		                <th>Title</th>
+		                <th>Author</th>
+		                <th>Created At</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <th:block th:each="post : ${posts}">
+		                <tr>
+		                    <td th:text="${post.postId}">1</td>
+		                    <td>
+		                        <a th:href="@{'/partyBoardViewPage/' + ${post.postId}}" th:text="${post.title}">Post Title</a>
+		                    </td>
+		                    <td th:text="${post.author}">Author</td>
+		                    <td th:text="${#dates.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</td>
+		                </tr>
+		            </th:block>
+		        </tbody>
+		    </table>
+		    <!-- 새 게시글 작성 버튼 -->
+		    <div class="create-post">
+		        <a href="/partyBoardCreatePage" class="button">Create New Post</a>
+		    </div>
+		</section>
+
+        <!-- 페이징 UI -->
+        <section class="pagination" th:if="${totalPages > 1}">
+            <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=1'}">First</a>
+            <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a th:classappend="${currentPage == i} ? 'active'"
+                   th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${i}}"
+                   th:text="${i}">1</a>
+            </th:block>
+            <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${totalPages}}">Last</a>
+        </section>
+    </main>
 </body>
+<!-- 푸터 영역 -->
+<footer>
+    &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
 </html>
