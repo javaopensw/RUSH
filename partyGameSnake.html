@@ -1,37 +1,103 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game</title>
+    <title>Study Village</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="headerstyles.css">
+    <link rel="stylesheet" href="navstyles.css">
+
     <style>
-        /* Reset and base styles */
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
             font-family: 'Arial', sans-serif;
-            background-color: #F7F7F7;
+            color: #333;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
         }
-
-        .game-container {
-            background-color: #FFFFFF;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 0 1rem rgba(0, 0, 0, .1);
-            text-align: center;
+        #main-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            flex: 1;
         }
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('image.png') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+        }
+
+        #sidebar {
+            width: 180px;
+            background-color: rgba(104, 86, 82, 0.8);
+            color: #f0e6d2;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: sticky;
+            top: 160px;
+            left: 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            height: auto;
+            align-self: flex-start;
+            padding-top: 30px;
+        }
+
+        #sidebar button {
+            background-color: #f0e6d2;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            color: #685652;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #sidebar button:hover {
+            background-color: #ecd7ae;
+        }
+
+        #content {
+            margin-left: 220px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            max-width: 1000px;
+            margin: 20px auto;
+            position: relative;
+            top: 10px;
+            flex-grow: 1;
+            height: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
 
         canvas {
@@ -63,22 +129,95 @@
         }
 
         .score {
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-top: 1rem;
+        }
+
+        footer {
+            background-color: rgba(104, 86, 82, 0.8);
+            text-align: center;
+            color: #f0e6d2;
+            padding: 10px;
+            font-size: 14px;
+            position: relative; /* 푸터가 콘텐츠 아래에 위치하도록 조정 */
+            margin-top: auto; /* 콘텐츠를 밀어내고 하단에 위치 */
+            width: 100%; /* 화면 너비에 맞게 확장 */
+        }
+
+        #groupName {
+            text-align: center; /* 텍스트 중앙 정렬 */
+            font-size: 20px; /* 글자 크기 */
+            font-weight: bold; /* 글자 두껍게 */
+            color: #f0e6d2; /* 텍스트 색상 */
+            margin-bottom: 20px; /* 버튼들과의 간격 */
+            padding: 15px; /* 내부 여백 추가 */
+            background-color: rgba(104, 86, 82, 0.9); /* 배경색 설정 */
+            border-radius: 10px; /* 상자 모서리를 둥글게 설정 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+            display: flex; /* 플렉스 컨테이너 설정 */
+            flex-direction: column; /* 텍스트를 세로로 배치 */
+            align-items: center; /* 세로 중앙 정렬 */
+            justify-content: center; /* 가로 중앙 정렬 */
+            width: 100%; /* 사이드바 너비에 맞게 확장 */
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+        }
+
+        #groupName h3 {
+            margin: 0; /* 제목의 기본 여백 제거 */
+            font-size: 20px; /* 제목의 글자 크기 */
+        }
+
+        #groupName p {
+            margin: 5px 0 0; /* 텍스트 간격 조정 (위, 아래) */
+            font-size: 16px; /* 두 번째 줄 텍스트 크기 */
+            color: #f0e6d2; /* 텍스트 색상 */
+            font-weight: bold; /* 제목을 두껍게 */
         }
     </style>
 </head>
 <body>
-<div class="game-container">
-    <h1>스네이크 게임</h1>
-    <canvas id="game-board" width="400" height="400"></canvas>
-    <div class="buttons">
-        <button id="start-btn">시작</button>
-        <button id="stop-btn">정지</button>
+<div class="background"></div>
+<header>
+    <h1>Study Village</h1>
+    <div class="auth-buttons">
+        <button onclick="window.location.href='mainPage.html';">Logout</button>
     </div>
-    <p class="score">점수: <span id="score">0</span></p>
+    <div class="profile-container">
+        <i class="fas fa-user-circle profile-icon"></i>
+    </div>
+</header>
+<nav>
+    <a href="#">Board</a>
+    <a href="#">File</a>
+    <a href="#">Chat</a>
+    <a href="#">Game</a>
+    <a href="#">Setting</a>
+</nav>
+<div id="main-layout">
+    <div id="sidebar">
+        <div id="groupName">
+            <h3>Group</h3>
+            <p>A</p>
+        </div>
+        <button>계산기</button>
+        <button>그래프</button>
+        <button>수식변환</button>
+        <button>사전</button>
+        <button>맞춤법</button>
+    </div>
+    <div id="content">
+        <h1 style="text-align: center; font-size: 32px; color: #333; margin: 10px 0;">Snake Game</h1>
+        <canvas id="game-board" width="600" height="600"></canvas>
+        <div class="buttons">
+            <button id="start-btn">시작</button>
+            <button id="stop-btn">정지</button>
+        </div>
+        <p class="score">점수: <span id="score">0</span></p>
+    </div>
 </div>
-
+<footer>
+    &copy; 2024 Study Village. All rights reserved.
+</footer>
 <script>
     const canvas = document.getElementById("game-board");
     const ctx = canvas.getContext("2d");
@@ -91,11 +230,11 @@
     let fruit;
     let gameInterval;
 
-    (function setup() {
+    function setup() {
         snake = new Snake();
         fruit = new Fruit();
         fruit.pickLocation();
-    }());
+    }
 
     function startGame() {
         if (!gameInterval) {
@@ -127,22 +266,24 @@
         stopGame();
     }
 
-    function Snake() {
-        this.x = 0;
-        this.y = 0;
-        this.xSpeed = scale;
-        this.ySpeed = 0;
-        this.tail = [];
+    class Snake {
+        constructor() {
+            this.x = 0;
+            this.y = 0;
+            this.xSpeed = scale;
+            this.ySpeed = 0;
+            this.tail = [];
+        }
 
-        this.draw = function () {
+        draw() {
             ctx.fillStyle = "#4CAF50";
             for (let i = 0; i < this.tail.length; i++) {
                 ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
             }
             ctx.fillRect(this.x, this.y, scale, scale);
-        };
+        }
 
-        this.update = function () {
+        update() {
             for (let i = 0; i < this.tail.length - 1; i++) {
                 this.tail[i] = this.tail[i + 1];
             }
@@ -153,9 +294,9 @@
             if (this.x < 0 || this.y < 0 || this.x >= canvas.width || this.y >= canvas.height) {
                 gameOver();
             }
-        };
+        }
 
-        this.changeDirection = function (direction) {
+        changeDirection(direction) {
             switch (direction) {
                 case "Up":
                     this.xSpeed = 0;
@@ -174,25 +315,25 @@
                     this.ySpeed = 0;
                     break;
             }
-        };
+        }
 
-        this.eat = function (fruit) {
+        eat(fruit) {
             if (this.x === fruit.x && this.y === fruit.y) {
                 this.tail.push({ x: this.x - this.xSpeed, y: this.y - this.ySpeed });
                 return true;
             }
             return false;
-        };
+        }
 
-        this.checkCollision = function () {
+        checkCollision() {
             for (let i = 0; i < this.tail.length; i++) {
                 if (this.x === this.tail[i].x && this.y === this.tail[i].y) {
                     gameOver();
                 }
             }
-        };
+        }
 
-        this.reset = function () {
+        reset() {
             this.x = 0;
             this.y = 0;
             this.tail = [];
@@ -200,22 +341,24 @@
             this.ySpeed = 0;
             score = 0;
             document.getElementById("score").textContent = score;
-        };
+        }
     }
 
-    function Fruit() {
-        this.x = 0;
-        this.y = 0;
+    class Fruit {
+        constructor() {
+            this.x = 0;
+            this.y = 0;
+        }
 
-        this.pickLocation = function () {
+        pickLocation() {
             this.x = Math.floor(Math.random() * columns) * scale;
             this.y = Math.floor(Math.random() * rows) * scale;
-        };
+        }
 
-        this.draw = function () {
+        draw() {
             ctx.fillStyle = "#FF4136";
             ctx.fillRect(this.x, this.y, scale, scale);
-        };
+        }
     }
 
     window.addEventListener("keydown", (event) => {
@@ -225,6 +368,8 @@
 
     document.getElementById("start-btn").addEventListener("click", startGame);
     document.getElementById("stop-btn").addEventListener("click", stopGame);
+
+    setup();
 </script>
 </body>
 </html>
