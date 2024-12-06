@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/styles/basic/header.css">
     <link rel="stylesheet" href="/styles/basic/nav.css">
 	<link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
-	<link rel="stylesheet" href="/styles/party/chatStyle.css">
+
 	<link rel="stylesheet" href="/styles/basic/footer.css">
 
 
@@ -36,6 +36,38 @@
 		            background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
 		            filter: blur(8px); /* 블러 효과 적용 */
 		        }
+				
+				/* 메인 콘텐츠 영역 - 기능 부분 */
+				#content {
+				    margin-left: 220px; /* 사이드바 공간 확보 */
+				    padding: 20px; /* 내부 여백 */
+				    background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 (흰색) */
+				    border: 1px solid #e0e0e0; /* 얇은 테두리 추가 */
+				    border-radius: 10px; /* 모서리를 둥글게 설정 */
+				    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 추가 */
+				    font-family: 'Arial', sans-serif; /* 폰트 설정 */
+				    font-size: 16px; /* 기본 글꼴 크기 */
+				    line-height: 1.5; /* 줄 간격 설정 */
+				    color: #333; /* 텍스트 색상 설정 */
+				    max-width: 1000px; /* 최대 콘텐츠 너비 제한 */
+				    margin: 20px auto; /* 수평으로 가운데 정렬 */
+				    position: relative; /* 기본 문서 흐름에 따라 위치 */
+				    top: 10px; /* 상단에서 10px 아래로 위치 */
+				    flex-grow: 1;
+				    height: 500px;
+				}
+				body {
+				    margin: 0; /* 기본 여백 제거 */
+				    padding: 0; /* 기본 패딩 제거 */
+				    font-family: 'A`rial', sans-serif; /* 기본 폰트 설정 */
+				    color: #333; /* 기본 텍스트 색상 */
+				    display: flex; /* 플렉스 컨테이너 설정 */
+				    flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+				}
+			/*여기에 페이지 스타일 정의 추가*/
+			/*여기에 페이지 스타일 정의 추가*/	
+			/*여기에 페이지 스타일 정의 추가*/	
+			/*여기에 페이지 스타일 정의 추가*/
 	</style>
 	
 	
@@ -179,30 +211,15 @@
 	    </div>
 
 
-	</div>
-
-
-    <!-- 채팅 UI 추가 -->
-    <div id="chat-container">
-        <!-- Party Info -->
-        <div class="party-info" th:text="${party.partyName}">
-        </div>
-
-        <!-- Chat Window -->
-        <div id="chat-window" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll;">
-            <ul id="messages">
-            </ul>
-        </div>
-
-        <!-- Hidden Fields -->
-        <p hidden id="partyId" th:text="${party.partyId}">Party ID</p>
-        <p hidden id="username" th:text="${user.username}">Party ID</p>
-
-        <!-- Input Container -->
-        <div class="input-container">
-            <input type="text" id="message-input" placeholder="메시지를 입력해주세요">
-            <button id="send-btn">보내기</button>
-        </div>
+	</div>>
+    <div id="content">
+		<!-- 여기에 페이지 기능 추가 -->
+		<!-- 여기에 페이지 기능 추가 -->	
+		<!-- 여기에 페이지 기능 추가 -->
+		<!-- 여기에 페이지 기능 추가 -->
+		<!-- 여기에 페이지 기능 추가 -->
+		<!-- 여기에 페이지 기능 추가 -->
+		
     </div>
 
 </div>
@@ -220,57 +237,15 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 	
-
+	<script src="/js/formula.js"></script>
 	<script src="/js/container.js"></script>
 	<script src="/js/calculator.js"></script>
     <script src="/js/dictionary.js"></script>
     <script src="/js/graph.js"></script>
-	<script src="/js/formula.js"></script>
     <script src="/js/checkspell.js"></script>
 
 	
-<script>
-
-	  const partyId = document.getElementById('partyId').textContent;
-	  const socket = new WebSocket(`ws://localhost:8080/chat/${partyId}`);
-
-
-	  // 서버로부터 메시지를 받았을 때 처리
-	  socket.onmessage = function (event) {
-	      console.log("수신 메시지:", event.data); // 수신 로그
-	      const messageList = document.getElementById('messages');
-	      const newMessage = document.createElement('li');
-	      newMessage.textContent = event.data;
-	      messageList.appendChild(newMessage);
-	  };
-
-	  document.getElementById('send-btn').onclick = function () {
-	      const input = document.getElementById('message-input');
-	      const username = document.getElementById('username').textContent;
-	      const message = `${username} > ${input.value}`;
-	      if (message.trim() !== "") {
-	          console.log("전송 메시지:", message); // 전송 로그
-	          socket.send(message);
-
-	          // 화면에 보낸 메시지 추가
-	          //const messageList = document.getElementById('messages');
-	          //const newMessage = document.createElement('li');
-	          //newMessage.textContent = message; // 보낸 메시지 표시
-	          //newMessage.classList.add('sent'); // 보낸 메시지 스타일 적용 (선택 사항)
-	          //messageList.appendChild(newMessage);
-	          //messageList.scrollTop = messageList.scrollHeight; // 스크롤을 맨 아래로
-
-	          input.value = ''; // 입력 필드 초기화
-	      }
-	  };
-
-
-</script>
 
 
 </html>
-
-
-
-
 
