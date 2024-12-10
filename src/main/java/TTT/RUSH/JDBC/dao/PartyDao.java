@@ -111,6 +111,26 @@ public class PartyDao {
         jdbcTemplate.update(sql, partyId, userId);
     }
 
+ // 파티 삭제
+    public void deleteParty(int partyId) {
+        // 삭제 순서: party_board_comment -> party_file -> party_board_post -> role -> party_users -> party
+        String deletePartyBoardComments = "DELETE FROM party_board_comment WHERE post_id IN (SELECT post_id FROM party_board_post WHERE party_id = ?)";
+        String deletePartyFiles = "DELETE FROM party_file WHERE party_id = ?";
+        String deletePartyPosts = "DELETE FROM party_board_post WHERE party_id = ?";
+        String deletePartyUsers = "DELETE FROM party_users WHERE party_id = ?";
+        String deleteRoles = "DELETE FROM role WHERE party_id = ?";
+        String deleteParty = "DELETE FROM party WHERE party_id = ?";
 
+        // 트랜잭션 처리
+        jdbcTemplate.update(deletePartyBoardComments, partyId);  // 먼저 댓글 삭제
+        jdbcTemplate.update(deletePartyFiles, partyId);
+        jdbcTemplate.update(deletePartyPosts, partyId);
+        jdbcTemplate.update(deletePartyUsers, partyId);
+        jdbcTemplate.update(deleteRoles, partyId);
+        jdbcTemplate.update(deleteParty, partyId);
+    }
+
+    
+    
 }
 

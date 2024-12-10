@@ -4,9 +4,8 @@
     <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
     <title>Study Village</title> <!-- 문서 제목 설정 -->
-    <!-- Font Awesome 라이브러리 추가 -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 외부 헤더 스타일 연결 -->
     <link rel="stylesheet" href="/styles/basic/header.css">
     <link rel="stylesheet" href="/styles/basic/nav.css">
 	<link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
@@ -15,14 +14,31 @@
 
 
 	<style>
+		body {
+		    margin: 0;
+		    display: flex;
+		    flex-direction: column; /* 세로로 정렬 */
+		    min-height: 100vh; /* Viewport Height 설정 */
+		}
+
 		#main-layout {
-		            display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
-		            flex-direction: row; /* 가로 정렬 (기본값) */
-		            align-items: flex-start; /* 세로 축 정렬 (위쪽 정렬) */
-		            gap: 20px; /* 사이드바와 콘텐츠 사이 간격 */
-		            padding: 20px; /* 내부 여백 */
-		            box-sizing: border-box; /* 패딩 포함 크기 계산 */
-		        }
+		    display: flex;
+		    flex-direction: row; /* 가로 정렬 */
+		    align-items: flex-start;
+		    gap: 20px;
+		    padding: 20px;
+		    box-sizing: border-box;
+		    flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+		}
+
+		footer {
+		    background-color: rgba(104, 86, 82, 0.8);
+		    text-align: center;
+		    padding: 10px;
+		    font-size: 14px;
+		    color: #f0e6d2;
+		}
+
 
 		        /* 블러 처리된 배경 */
 		        .background {
@@ -104,7 +120,6 @@
 	                    <button class="tab">행렬</button>
 	                </div>
 	                <div class="buttons"></div>
-	              <script src="calculator.js"></script>
 	            </div>
 	        </div>
 	    </div>
@@ -153,17 +168,17 @@
 	        <div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
 	    </div>
 
-	     <!-- 사전 -->
-	    <div class="container" id="dictionary-container">
-	        <div class="header">사전 찾아보기</div>
-	        <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
-
-	        <div>
-	            <input type="text" id="word" placeholder="단어를 입력하세요...">
-	            <button onclick="lookupWord()">찾기</button>
-	        </div>
-	        <div id="definition"></div>
-	    </div>
+		<!-- 사전 -->
+		    <div class="container" id="dictionary-container">
+		       <div class="header">영어 사전</div>
+		       <button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
+		   
+		       <div>
+		           <input type="text" id="word" placeholder="단어를 입력하세요..">
+		           <button onclick="lookupWord()">찾기</button>
+		       </div>
+		       <div id="definition"></div>
+		   </div>
 
 	     <!-- 맞춤법 -->
 	    <div class="container" id="spellcheck-container">
@@ -207,13 +222,14 @@
 
 </div>
 
-
-</body>
-
 <!-- 푸터 영역 -->
 <footer>
     &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
 </footer>
+
+</body>
+
+
 
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

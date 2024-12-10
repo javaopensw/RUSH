@@ -1,6 +1,7 @@
 package TTT.RUSH.Basic.controller;
 
 import TTT.RUSH.Basic.service.PartyFileService;
+import TTT.RUSH.Basic.service.PartyService;
 import TTT.RUSH.JDBC.entity.Party;
 import TTT.RUSH.JDBC.entity.Party_file;
 import TTT.RUSH.JDBC.entity.Users;
@@ -15,13 +16,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -150,14 +149,6 @@ public class PartyTEMPController {
 
 
 
-    @GetMapping("/partySettingPage/{partyId}")
-    public String partySettingPage(@PathVariable Long partyId, HttpSession session, Model model) {
-        Party party = (Party) session.getAttribute("currentParty");
-        Users user = (Users) session.getAttribute("user");
 
-        model.addAttribute("party", party);
-        model.addAttribute("user", user);
-        return "partySettingPage";
-    }
 }
 

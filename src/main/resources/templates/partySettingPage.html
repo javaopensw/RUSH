@@ -15,6 +15,32 @@
 
 
 	<style>
+		
+		
+		body {
+		    margin: 0;
+		    display: flex;
+		    flex-direction: column; /* 세로로 정렬 */
+		    min-height: 100vh; /* Viewport Height 설정 */
+		}
+
+		#main-layout {
+		    display: flex;
+		    flex-direction: row; /* 가로 정렬 */
+		    align-items: flex-start;
+		    gap: 20px;
+		    padding: 20px;
+		    box-sizing: border-box;
+		    flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+		}
+
+		footer {
+		    background-color: rgba(104, 86, 82, 0.8);
+		    text-align: center;
+		    padding: 10px;
+		    font-size: 14px;
+		    color: #f0e6d2;
+		}
 		#main-layout {
 		            display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
 		            flex-direction: row; /* 가로 정렬 (기본값) */
@@ -56,22 +82,12 @@
 				    flex-grow: 1;
 				    height: 500px;
 				}
-				body {
-				    margin: 0; /* 기본 여백 제거 */
-				    padding: 0; /* 기본 패딩 제거 */
-				    font-family: 'A`rial', sans-serif; /* 기본 폰트 설정 */
-				    color: #333; /* 기본 텍스트 색상 */
-				    display: flex; /* 플렉스 컨테이너 설정 */
-				    flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
-				}
+
 	</style>
 	
 	
 	
 </head>
-<body>
-<!-- 블러 처리된 배경 -->
-<div class="background"></div>
 
 <!-- 헤더 영역 -->
 <header>
@@ -93,6 +109,12 @@
     <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
     <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
 </nav>
+
+
+<body>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
+
 
 <div id="main-layout">
 	 <!-- 사이드바 -->
@@ -132,7 +154,6 @@
 	                    <button class="tab">행렬</button>
 	                </div>
 	                <div class="buttons"></div>
-	              <script src="calculator.js"></script>
 	            </div>
 	        </div>
 	    </div>
@@ -221,17 +242,22 @@
 		</div>
 		<h1>Party Settings Page</h1>
 		<p>설정 관련 콘텐츠를 여기에 추가하세요.</p>
+		<!-- 파티 삭제 버튼 -->
+		<form th:action="@{/deleteParty/{partyId}(partyId=${party.partyId})}" method="post" onsubmit="return confirm('정말로 이 파티를 삭제하시겠습니까?');">
+		    <button type="submit">파티 삭제</button>
+		</form>
+
     </div>
 
 </div>
-
-
-</body>
 
 <!-- 푸터 영역 -->
 <footer>
     &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
 </footer>
+</body>
+
+
 
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

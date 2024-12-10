@@ -28,11 +28,7 @@ let currentContainer = null; // 현재 드래그 중인 컨테이너
     });
 });
     
-    // 초기 위치 설정 (모든 컨테이너에 적용)
-    containers.forEach(container => {
-        container.style.left = '800px'; // 초기 위치: 왼쪽에서 800px
-        container.style.top = '350px';  // 초기 위치: 위에서 350px
-    });
+
     
     // 드래그 시작 이벤트
     containers.forEach(container => {

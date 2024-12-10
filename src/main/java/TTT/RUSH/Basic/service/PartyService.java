@@ -41,9 +41,11 @@ public class PartyService {
         return partyDao.findPartyById(partyId);
     }
     
+    // 파티 삭제 처리 메서드 추가
     public void deleteParty(int userId, int partyId) {
-        partyDao.removeUserFromParty(partyId, userId);
-
+        partyDao.deleteParty(partyId);
     }
+    
+    
     
 }

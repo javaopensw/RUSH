@@ -196,6 +196,27 @@ public class PartyBoardController {
         }
         return "redirect:/partyBoardViewPage/" + comment.getPostId();
     }
+    @GetMapping("/partySettingPage/{partyId}")
+    public String partySettingPage(@PathVariable Long partyId, HttpSession session, Model model) {
+        Party party = (Party) session.getAttribute("currentParty");
+        Users user = (Users) session.getAttribute("user");
+
+        model.addAttribute("party", party);
+        model.addAttribute("user", user);
+        return "partySettingPage";
+    }
+
+    // 파티 삭제 처리
+    @PostMapping("/deleteParty/{partyId}")
+    public String deleteParty(@PathVariable Long partyId, HttpSession session) {
+        Party party = (Party) session.getAttribute("currentParty");
+        Users user = (Users) session.getAttribute("user");
+        if (user != null) {
+            partyService.deleteParty(user.getId(),party.getPartyId() );
+        }
+        return "redirect:/userPersonalPage"; 
+    }
+    
 }
 
 /*package TTT.RUSH.Basic.controller;

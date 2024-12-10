@@ -24,6 +24,18 @@ public class FixedController {
         return "index"; 
     }
     
+    // index 페이지는 네비게이션 역할
+    @GetMapping("/t1")
+    public String t1() {
+        return "useMe/templateWithOut"; 
+    }
+    // index 페이지는 네비게이션 역할
+    @GetMapping("/t2")
+    public String t2() {
+        return "useMe/templateWithSide"; 
+    }
+    
+    
     // 유저 생성 
     @GetMapping("/userCreate")
     public String userCreate() {
