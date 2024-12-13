@@ -8,54 +8,59 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/styles/basic/header.css">
     <link rel="stylesheet" href="/styles/basic/nav.css">
-	<link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
-	<link rel="stylesheet" href="/styles/party/chatStyle.css">
-	<link rel="stylesheet" href="/styles/basic/footer.css">
+   <link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
+   <link rel="stylesheet" href="/styles/party/chatStyle.css">
+   <link rel="stylesheet" href="/styles/basic/footer.css">
+
+   <!--구글 폰트-->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
 
 
-	<style>
-		body {
-		    margin: 0;
-		    display: flex;
-		    flex-direction: column; /* 세로로 정렬 */
-		    min-height: 100vh; /* Viewport Height 설정 */
-		}
+   <style>
+      body {
+          margin: 0;
+          display: flex;
+          flex-direction: column; /* 세로로 정렬 */
+          min-height: 100vh; /* Viewport Height 설정 */
+      }
 
-		#main-layout {
-		    display: flex;
-		    flex-direction: row; /* 가로 정렬 */
-		    align-items: flex-start;
-		    gap: 20px;
-		    padding: 20px;
-		    box-sizing: border-box;
-		    flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
-		}
+      #main-layout {
+          display: flex;
+          flex-direction: row; /* 가로 정렬 */
+          align-items: flex-start;
+          gap: 20px;
+          padding: 20px;
+          box-sizing: border-box;
+          flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+      }
 
-		footer {
-		    background-color: rgba(104, 86, 82, 0.8);
-		    text-align: center;
-		    padding: 10px;
-		    font-size: 14px;
-		    color: #f0e6d2;
-		}
+      footer {
+          background-color: rgba(104, 86, 82, 0.8);
+          text-align: center;
+          padding: 10px;
+          font-size: 14px;
+          color: #f0e6d2;
+      }
 
 
-		        /* 블러 처리된 배경 */
-		        .background {
-		            position: fixed; /* 화면 고정 */
-		            top: 0; /* 화면 상단부터 시작 */
-		            left: 0; /* 화면 왼쪽부터 시작 */
-		            width: 100%; /* 화면 전체 너비 */
-		            height: 100%; /* 화면 전체 높이 */
-		            z-index: -1; /* 콘텐츠보다 뒤에 위치 */
-		            background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
-		            background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
-		            filter: blur(8px); /* 블러 효과 적용 */
-		        }
-	</style>
-	
-	
-	
+              /* 블러 처리된 배경 */
+              .background {
+                  position: fixed; /* 화면 고정 */
+                  top: 0; /* 화면 상단부터 시작 */
+                  left: 0; /* 화면 왼쪽부터 시작 */
+                  width: 100%; /* 화면 전체 너비 */
+                  height: 100%; /* 화면 전체 높이 */
+                  z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+                  background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+                  background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+                  filter: blur(8px); /* 블러 효과 적용 */
+              }
+   </style>
+   
+   
+   
 </head>
 <body>
 <!-- 블러 처리된 배경 -->
@@ -83,118 +88,118 @@
 </nav>
 
 <div id="main-layout">
-	 <!-- 사이드바 -->
-	        <div id="sidebar">
-	            <div id="groupName">
-	                <h3>그룹</h3>
-	                <p th:text="${party.partyName}"></p> <!-- 그룹 이름 표시-->
-	            </div>
-	            <button onclick="toggleContainer(0)">계산기</button>
-	            <button onclick="toggleContainer(1)">그래프</button>
-	            <button onclick="toggleContainer(2)">수식변환</button>
-	            <button onclick="toggleContainer(3)">사전</button>
-	            <button onclick="toggleContainer(4)">맞춤법</button>
-	        </div>
+    <!-- 사이드바 -->
+           <div id="sidebar">
+               <div id="groupName">
+                   <h3>그룹</h3>
+                   <p th:text="${party.partyName}"></p> <!-- 그룹 이름 표시-->
+               </div>
+               <button onclick="toggleContainer(0)">계산기</button>
+               <button onclick="toggleContainer(1)">그래프</button>
+               <button onclick="toggleContainer(2)">수식변환</button>
+               <button onclick="toggleContainer(3)">사전</button>
+               <button onclick="toggleContainer(4)">맞춤법</button>
+           </div>
 
-	        <!-- 기능 컨테이너들 -->
-	    <div id="containers">
+           <!-- 기능 컨테이너들 -->
+       <div id="containers">
 
-	    <!-- 계산기 -->
-	    <div class="container" id="calculator-container">
-	        <div class="header">계산기</div>
-	        <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+       <!-- 계산기 -->
+       <div class="container" id="calculator-container">
+           <div class="header">계산기</div>
+           <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
 
-	        <div class="content">
-	            <div class="calculator">
-	                <div class="display-container">
-	                    <input type="text" id="display" readonly placeholder="0">
-	                    
-	                </div>
-	                <div class="tabs">
-	                    <button class="tab active">기본</button>
-	                    <button class="tab">대수학</button>
-	                    <button class="tab">삼각법</button>
-	                    <button class="tab">미적분학</button>
-	                    <button class="tab">통계</button>
-	                    <button class="tab">문자</button>
-	                    <button class="tab">행렬</button>
-	                </div>
-	                <div class="buttons"></div>
-	            </div>
-	        </div>
-	    </div>
-
-
-	     <!-- Graph Container -->
-	     
-
-	     <div id="graph-container" class="container" style="display: none;">
-	        <div class="header">그래프 만들기</div>
-	        <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
-	        <div class="content">
-	            <div>
-	                <label for="graphType">그래프 종류:</label>
-	                <select id="graphType">
-	                    <option value="line">선 그래프</option>
-	                    <option value="bar">막대 그래프</option>
-	                    <option value="pie">원 그래프</option>
-	                    <option value="doughnut">도넛 그래프</option>
-	                </select>
-	            </div>
-	            <div>
-	                <label for="labelsInput">가로축(쉼표로 구분):</label>
-	                <input type="text" id="labelsInput" placeholder="예시 : 1월, 2월, 3월">
-	            </div>
-	            <div>
-	                <label for="dataInput">세로축(쉼표로 구분):</label>
-	                <input type="text" id="dataInput" placeholder="예시 : 10, 20, 15">
-	            </div>
-	            <button onclick="updateGraph()">만들기</button>
-	            <canvas id="myChart" width="400" height="200"></canvas>
-	        </div>
-	    </div>
-	    
-
-	     <!-- 수식변환 -->
-	    <div class="container" id="formula-container">
-	        <div class="header">수학공식 변환기</div>
-	        <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
-
-	        <p>아래 입력창에 바꿀 내용을 입력해보세요:</p>
-	        <input type="text" id="formulaInput" placeholder="예시 : a^2 + b^2 = c^2">
-	         <button onclick="renderFormula()">바꾸기</button>
-
-	        <h2>바꾼 공식</h2>
-	        <div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
-	    </div>
-
-		<!-- 사전 -->
-		    <div class="container" id="dictionary-container">
-		       <div class="header">영어 사전</div>
-		       <button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
-		   
-		       <div>
-		           <input type="text" id="word" placeholder="단어를 입력하세요..">
-		           <button onclick="lookupWord()">찾기</button>
-		       </div>
-		       <div id="definition"></div>
-		   </div>
-
-	     <!-- 맞춤법 -->
-	    <div class="container" id="spellcheck-container">
-	        <div class="header">맞춤법 검사기</div>
-	        <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
-
-	        <div>
-	            <textarea id="text" rows="4" cols="50" placeholder="확인할 내용을 입력하세요..."></textarea>
-	            <br>
-	            <button onclick="checkSpelling()">확인하기</button>
-	        </div>
-	        <div id="result"></div>
-	    </div>
+           <div class="content">
+               <div class="calculator">
+                   <div class="display-container">
+                       <input type="text" id="display" readonly placeholder="0">
+                       
+                   </div>
+                   <div class="tabs">
+                       <button class="tab active">기본</button>
+                       <button class="tab">대수학</button>
+                       <button class="tab">삼각법</button>
+                       <button class="tab">미적분학</button>
+                       <button class="tab">통계</button>
+                       <button class="tab">문자</button>
+                       <button class="tab">행렬</button>
+                   </div>
+                   <div class="buttons"></div>
+               </div>
+           </div>
+       </div>
 
 
-	</div>
+        <!-- Graph Container -->
+        
+
+        <div id="graph-container" class="container" style="display: none;">
+           <div class="header">그래프 만들기</div>
+           <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+           <div class="content">
+               <div>
+                   <label for="graphType">그래프 종류:</label>
+                   <select id="graphType">
+                       <option value="line">선 그래프</option>
+                       <option value="bar">막대 그래프</option>
+                       <option value="pie">원 그래프</option>
+                       <option value="doughnut">도넛 그래프</option>
+                   </select>
+               </div>
+               <div>
+                   <label for="labelsInput">가로축(쉼표로 구분):</label>
+                   <input type="text" id="labelsInput" placeholder="예시 : 1월, 2월, 3월">
+               </div>
+               <div>
+                   <label for="dataInput">세로축(쉼표로 구분):</label>
+                   <input type="text" id="dataInput" placeholder="예시 : 10, 20, 15">
+               </div>
+               <button onclick="updateGraph()">만들기</button>
+               <canvas id="myChart" width="400" height="200"></canvas>
+           </div>
+       </div>
+       
+
+        <!-- 수식변환 -->
+       <div class="container" id="formula-container">
+           <div class="header">수학공식 변환기</div>
+           <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+           <p>아래 입력창에 바꿀 내용을 입력해보세요:</p>
+           <input type="text" id="formulaInput" placeholder="예시 : a^2 + b^2 = c^2">
+            <button onclick="renderFormula()">바꾸기</button>
+
+           <h2>바꾼 공식</h2>
+           <div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
+       </div>
+
+      <!-- 사전 -->
+          <div class="container" id="dictionary-container">
+             <div class="header">영어 사전</div>
+             <button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
+         
+             <div>
+                 <input type="text" id="word" placeholder="단어를 입력하세요..">
+                 <button onclick="lookupWord()">찾기</button>
+             </div>
+             <div id="definition"></div>
+         </div>
+
+        <!-- 맞춤법 -->
+       <div class="container" id="spellcheck-container">
+           <div class="header">맞춤법 검사기</div>
+           <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+           <div>
+               <textarea id="text" rows="4" cols="50" placeholder="확인할 내용을 입력하세요..."></textarea>
+               <br>
+               <button onclick="checkSpelling()">확인하기</button>
+           </div>
+           <div id="result"></div>
+       </div>
+
+
+   </div>
 
 
     <!-- 채팅 UI 추가 -->
@@ -232,59 +237,60 @@
 
 
 
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-	
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+   
 
-	<script src="/js/container.js"></script>
-	<script src="/js/calculator.js"></script>
+   <script src="/js/container.js"></script>
+   <script src="/js/calculator.js"></script>
     <script src="/js/dictionary.js"></script>
     <script src="/js/graph.js"></script>
-	<script src="/js/formula.js"></script>
+   <script src="/js/formula.js"></script>
     <script src="/js/checkspell.js"></script>
 
-	
+   
 <script>
 
-	  const partyId = document.getElementById('partyId').textContent;
-	  const socket = new WebSocket(`ws://localhost:8080/chat/${partyId}`);
+     const partyId = document.getElementById('partyId').textContent;
+     const socket = new WebSocket(`ws://localhost:8080/chat/${partyId}`);
 
 
-	  // 서버로부터 메시지를 받았을 때 처리
-	  socket.onmessage = function (event) {
-	      console.log("수신 메시지:", event.data); // 수신 로그
-	      const messageList = document.getElementById('messages');
-	      const newMessage = document.createElement('li');
-	      newMessage.textContent = event.data;
-	      messageList.appendChild(newMessage);
-	  };
+     // 서버로부터 메시지를 받았을 때 처리
+     socket.onmessage = function (event) {
+         console.log("수신 메시지:", event.data); // 수신 로그
+         const messageList = document.getElementById('messages');
+         const newMessage = document.createElement('li');
+         newMessage.textContent = event.data;
+         messageList.appendChild(newMessage);
+     };
 
-	  document.getElementById('send-btn').onclick = function () {
-	      const input = document.getElementById('message-input');
-	      const username = document.getElementById('username').textContent;
-	      const message = `${username} > ${input.value}`;
-	      if (message.trim() !== "") {
-	          console.log("전송 메시지:", message); // 전송 로그
-	          socket.send(message);
+     document.getElementById('send-btn').onclick = function () {
+         const input = document.getElementById('message-input');
+         const username = document.getElementById('username').textContent;
+         const message = `${username} > ${input.value}`;
+         if (message.trim() !== "") {
+             console.log("전송 메시지:", message); // 전송 로그
+             socket.send(message);
 
-	          // 화면에 보낸 메시지 추가
-	          //const messageList = document.getElementById('messages');
-	          //const newMessage = document.createElement('li');
-	          //newMessage.textContent = message; // 보낸 메시지 표시
-	          //newMessage.classList.add('sent'); // 보낸 메시지 스타일 적용 (선택 사항)
-	          //messageList.appendChild(newMessage);
-	          //messageList.scrollTop = messageList.scrollHeight; // 스크롤을 맨 아래로
+             // 화면에 보낸 메시지 추가
+             //const messageList = document.getElementById('messages');
+             //const newMessage = document.createElement('li');
+             //newMessage.textContent = message; // 보낸 메시지 표시
+             //newMessage.classList.add('sent'); // 보낸 메시지 스타일 적용 (선택 사항)
+             //messageList.appendChild(newMessage);
+             //messageList.scrollTop = messageList.scrollHeight; // 스크롤을 맨 아래로
 
-	          input.value = ''; // 입력 필드 초기화
-	      }
-	  };
+             input.value = ''; // 입력 필드 초기화
+         }
+     };
 
 
 </script>
 
 
 </html>
+
 
 
 

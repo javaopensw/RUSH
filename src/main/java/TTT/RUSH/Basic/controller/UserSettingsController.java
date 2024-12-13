@@ -118,9 +118,9 @@ public class UserSettingsController {
 
 
     // [Fixed] 파티 생성 및 참가 페이지
-    @GetMapping("/userPersonalPartyCratePage")
-    public String userPersonalPartyCratePage() {
-        return "userPersonalPartyCratePage";
+    @GetMapping("/userPersonalPartyCreatePage")
+    public String userPersonalPartyCreatePage() {
+        return "userPersonalPartyCreatePage";
     }
 
     // [Fixed] 새로운 파티 생성
