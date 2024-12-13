@@ -1,7 +1,6 @@
 package TTT.RUSH.Basic.controller;
 
 import TTT.RUSH.Basic.service.PartyFileService;
-import TTT.RUSH.Basic.service.PartyService;
 import TTT.RUSH.JDBC.entity.Party;
 import TTT.RUSH.JDBC.entity.Party_file;
 import TTT.RUSH.JDBC.entity.Users;

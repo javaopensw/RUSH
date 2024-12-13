@@ -1,70 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>사이드 바 존재 형식</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사이드 바 존재 형식</title>
     <link rel="stylesheet" href="/styles/basic/header.css">   <!--헤더임 -->
-   <link rel="stylesheet" href="/styles/user/basic.css">   <!--기본 레이아웃-->
+    <link rel="stylesheet" href="/styles/user/basic.css">   <!--기본 레이아웃-->
 
-   <link rel="stylesheet" href="/styles/basic/footer.css">   <!--풋타임-->
-<style>
-  .toolbar {
-    background-color: #ddd; /* 툴바 색상 */
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
+    <link rel="stylesheet" href="/styles/basic/footer.css">   <!--풋타임-->
+    <style>
+        .toolbar {
+            background-color: #ddd; /* 툴바 색상 */
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
 
-  .row {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #eef;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-</style>
+        .row {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #eef;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* body 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+        }
+
+        /* 고정된 컨테이너 */
+        .fixed-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        /* 공통 컨테이너 스타일 */
+        .container {
+            width: 350px;
+            padding: 20px;
+            margin: 30px auto; /* 중앙 정렬 및 헤더와 간격 */
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* 입력 필드 스타일 */
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            height: 45px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            outline: none;
+            padding-left: 10px;
+            background-color: #f5f5f5;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            width: 100%;
+            height: 45px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            background-color: #F2AF9B;
+            box-sizing: border-box;
+        }
+
+        .btn + .btn {
+            margin-top: 15px; /* 버튼 사이 간격 */
+        }
+
+        .btn:active {
+            background-color: #f59c81;
+        }
+
+        /* 링크 스타일 */
+        a {
+            font-size: 14px;
+            color: gray;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
 </head>
 <body>
-   
-<!--헤더 여기에-->   
+
+<!--헤더 여기에-->
 <div th:replace="~{reuse/header2 :: header}"></div>
 
-<!--네비게이션 여기에-->   
+<!--네비게이션 여기에-->
 
 
 <!--페이지 내용 여기에-->
 <div class="page-container">
 
-  <div class="page-right">
-    <div class="page-inner-container">
-      <!--내용 여기에-->
-      
-      <h1>Edit Your Information</h1>
+    <div class="page-right">
+        <div class="page-inner-container">
+            <!--내용 여기에-->
 
-      <form action="/updatePersonalInfo" method="POST">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" th:value="${user.username}" required>
-          <br><br>
+            <h1>Edit Your Information</h1>
 
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" th:value="${user.email}" required>
-          <br><br>
+            <form action="/updatePersonalInfo" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" th:value="${user.username}" required>
+                <br><br>
 
-          <label for="password">New Password:</label>
-          <input type="password" id="password" name="password" placeholder="Enter new password">
-          <br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" th:value="${user.email}" required>
+                <br><br>
 
-          <button type="submit">Save Changes</button>
-      </form>
+                <label for="password">New Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password">
+                <br><br>
 
-      <br>
-      <a href="/userPersonalSettingPage">Cancel</a>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+            <br>
+            <a href="/userPersonalSettingPage">Cancel</a>
+        </div>
     </div>
-  </div>
 </div>
 
-<!--풋터 여기에-->   
+<!--풋터 여기에-->
 <div th:replace="~{reuse/footer :: footer}"></div>
 </body>
 </html>

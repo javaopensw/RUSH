@@ -88,7 +88,7 @@ public class UserSettingsController {
         Users user = (Users) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);
-            return "userPersonalInfoEditPage"; 
+            return "userPersonalInfoEditPage";
         }
         return "redirect:/login"; 
     }
@@ -118,9 +118,9 @@ public class UserSettingsController {
 
 
     // [Fixed] 파티 생성 및 참가 페이지
-    @GetMapping("/userPersonalPartyCratePage")
+    @GetMapping("/userPersonalPartyCreatePage")
     public String userPersonalPartyCratePage() {
-        return "userPersonalPartyCratePage";
+        return "userPersonalPartyCreatePage";
     }
 
     // [Fixed] 새로운 파티 생성
