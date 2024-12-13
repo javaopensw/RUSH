@@ -337,11 +337,16 @@
 			<th:block th:each="post : ${posts}">
 				<tr>
 					<!-- 변경된 줄  -->
-					<td id="postIdCell" th:text="${post.postId}"></td>
+					<td>
+						<a id="postIdCell" th:text="${post.postId}"
+						   th:href="@{'/partyBoardViewPage/' + ${post.postId}}" style="text-decoration: none; color: inherit;">Post id</a>
 
+
+					</td>
 					<td>
 						<a th:href="@{'/partyBoardViewPage/' + ${post.postId}}"
-						   th:text="${post.title}">Post Title</a>
+						   th:text="${post.title}" style="text-decoration: none; color: inherit;">Post Title</a>
+
 					</td>
 					<td th:text="${post.author}">Author</td>
 					<td th:text="${#dates.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</td>
@@ -402,5 +407,3 @@
 
 
 </html>
-
-

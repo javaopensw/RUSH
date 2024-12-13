@@ -1,48 +1,393 @@
-<!-- partyBoardCreatePage.html -->
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Post</title>
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
+    <title>Study Village</title> <!-- 문서 제목 설정 -->
+    <!-- Font Awesome 라이브러리 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 외부 헤더 스타일 연결 -->
+    <link rel="stylesheet" href="/styles/basic/header.css">
+    <link rel="stylesheet" href="/styles/basic/nav.css">
+    <link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <link rel="stylesheet" href="/styles/basic/footer.css">
+
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* 세로로 정렬 */
+            min-height: 100vh; /* Viewport Height 설정 */
+        }
+
+        #main-layout {
+            display: flex;
+            flex-direction: row; /* 가로 정렬 */
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+        }
+
+        footer {
+            background-color: rgba(104, 86, 82, 0.8);
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #f0e6d2;
+        }
+
+        /* 블러 처리된 배경 */
+        .background {
+            position: fixed; /* 화면 고정 */
+            top: 0; /* 화면 상단부터 시작 */
+            left: 0; /* 화면 왼쪽부터 시작 */
+            width: 100%; /* 화면 전체 너비 */
+            height: 100%; /* 화면 전체 높이 */
+            z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+            background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+            background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+            filter: blur(8px); /* 블러 효과 적용 */
+        }
+
+        /* 메인 콘텐츠 영역 - 기능 부분 */
+        #cp-content {
+            margin-left: 220px; /* 사이드바 공간 확보 */
+            padding: 20px; /* 내부 여백 */
+            background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 (흰색) */
+            border: 1px solid #e0e0e0; /* 얇은 테두리 추가 */
+            border-radius: 10px; /* 모서리를 둥글게 설정 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 추가 */
+            font-family: 'Arial', sans-serif; /* 폰트 설정 */
+            font-size: 16px; /* 기본 글꼴 크기 */
+            line-height: 1.5; /* 줄 간격 설정 */
+            color: #333; /* 텍스트 색상 설정 */
+            max-width: 1000px; /* 최대 콘텐츠 너비 제한 */
+            margin: 20px auto; /* 수평으로 가운데 정렬 */
+            position: relative; /* 기본 문서 흐름에 따라 위치 */
+            top: 10px; /* 상단에서 10px 아래로 위치 */
+            flex-grow: 1;
+            height: 500px;
+        }
+        body {
+            margin: 0; /* 기본 여백 제거 */
+            padding: 0; /* 기본 패딩 제거 */
+            font-family: 'A`rial', sans-serif; /* 기본 폰트 설정 */
+            color: #333; /* 기본 텍스트 색상 */
+            display: flex; /* 플렉스 컨테이너 설정 */
+            flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+        }
+        /*여기에 페이지 스타일 정의 추가*/
+        /*여기에 페이지 스타일 정의 추가*/
+        /*여기에 페이지 스타일 정의 추가*/
+        /*여기에 페이지 스타일 정의 추가*/
+
+        /* 폼 전체 스타일 */
+        /* 폼 전체 스타일 */
+        /* cp-content 스타일 */
+        /* cp-content 컨테이너 */
+        #cp-content {
+            margin-left: 220px; /* 사이드바 공간 확보 */
+            padding: 20px; /* 내부 여백 */
+            background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 */
+            border: 1px solid #e0e0e0; /* 얇은 테두리 */
+            border-radius: 10px; /* 모서리를 둥글게 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            font-family: 'Arial', sans-serif; /* 폰트 설정 */
+            font-size: 16px; /* 기본 글꼴 크기 */
+            line-height: 1.5; /* 줄 간격 설정 */
+            color: #333; /* 텍스트 색상 */
+            max-width: 1000px; /* 최대 너비 제한 */
+            margin: 20px auto; /* 수평으로 가운데 정렬 */
+            position: relative; /* 기본 위치 */
+            top: 10px; /* 상단에서 10px 아래로 위치 */
+            flex-grow: 1;
+            height: 500px; /* 고정 높이 */
+            overflow-y: auto; /* 세로 스크롤 활성화 */
+        }
+
+        /* 폼 스타일 */
+        #cp-content form {
+            width: 100%; /* 부모 컨테이너 너비를 따름 */
+            max-width: 960px; /* 컨테이너 안에서 적당히 여백 확보 */
+            margin: 0 auto; /* 중앙 정렬 */
+            padding: 10px 0; /* 내부 여백 (세로로 압축) */
+        }
+
+        /* 폼 제목 스타일 */
+        #cp-content h1 {
+            font-size: 1.5em; /* 제목 크기 */
+            color: #444; /* 텍스트 색상 */
+            text-align: left; /* 중앙 정렬 */
+            margin-bottom: 20px; /* 아래 요소와 간격 */
+        }
+
+        /* 라벨 스타일 */
+        #cp-content form label {
+            font-size: 1em;
+            font-weight: bold;
+            color: #555; /* 라벨 색상 */
+            margin-bottom: 10px;
+            display: block; /* 블록 요소로 표시 */
+        }
+
+        /* 입력 필드 스타일 */
+        #cp-content form input[type="text"] {
+            width: 100%; /* 입력 필드 너비 */
+            padding: 8px 10px; /* 내부 여백 */
+            margin-bottom: 15px; /* 아래 요소와 간격 */
+            border: 1px solid #ccc; /* 테두리 */
+            border-radius: 6px; /* 둥근 모서리 */
+            font-size: 1em;
+            background-color: #fff;
+            box-sizing: border-box; /* 테두리와 패딩 포함 */
+        }
+
+        /* 에디터 스타일 */
+        #editor {
+            height: 200px; /* 에디터 높이 */
+            border: 1px solid #ccc;
+            border-radius: 6px; /* 둥근 모서리 */
+            padding: 10px;
+            background-color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+            overflow-y: auto; /* 스크롤 활성화 */
+            margin-bottom: 20px; /* 아래 요소와 간격 */
+        }
+
+        /* 숨겨진 텍스트 영역 */
+        #cp-content textarea {
+            display: none; /* 숨김 */
+        }
+
+        /* 버튼 스타일 */
+        #cp-content button[type="submit"] {
+            display: inline-block; /* 버튼을 인라인 요소로 설정 */
+            float: right; /* 오른쪽 정렬 */
+            width: auto; /* 너비 자동 조정 */
+            max-width: 200px; /* 최대 버튼 너비 제한 (크게 조정) */
+            padding: 12px 16px; /* 버튼 크기 키움 */
+            background-color: rgba(106, 93, 90, 0.8); /* 메인 색상 */
+            color: #fff; /* 텍스트 색상 */
+            font-size: 1em; /* 텍스트 크기 증가 */
+            font-weight: bold;
+            border: none;
+            border-radius: 6px; /* 둥근 모서리 */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+
+            margin-top: -10px; /* 위로 이동 */
+            margin-right: 10px; /* 왼쪽으로 살짝 이동 */
+        }
+
+        #cp-content button[type="submit"]:hover {
+            background-color: rgba(133, 101, 92, 0.8); /* 호버 시 색상 변경 */
+            transform: scale(1.05); /* 약간 확대 */
+        }
+
+
+
+
+
+
+
+    </style>
+
+
+
 </head>
 <body>
-    <!-- 네비게이션 바 -->
-	<div class="navbar">
-	    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
-	    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
-	    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
-	    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
-	    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
-	</div>
-    <!-- 현재 파티 정보 -->
-    <div>
-        <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
-        <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
-    </div>
-    <h1>Create New Post</h1>
-    <form action="/partyBoardCreate" method="post" onsubmit="submitForm()">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <br>
-        <label for="content">Content:</label>
-        <div id="editor" style="height: 200px; border: 1px solid #ccc;"></div>
-        <textarea id="content" name="content" style="display:none;"></textarea>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
 
-    <script>
-        const quill = new Quill('#editor', {
-            theme: 'snow'
-        });
-        function submitForm() {
-            const contentInput = document.getElementById('content');
-            contentInput.value = quill.root.innerHTML;
-        }
-    </script>
+<!-- 헤더 영역 -->
+<header>
+
+    <h1>Study Village</h1> <!-- 제목 -->
+    <div class="auth-buttons">
+        <button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
+    </div>
+    <div class="profile-container">
+        <i class="fas fa-user-circle profile-icon"></i> <!-- Font Awesome 아이콘 -->
+    </div>
+</header>
+
+<!-- 네비게이션 바 -->
+<nav>
+    <a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+    <a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+    <a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+    <a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+    <a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+</nav>
+
+<div id="main-layout">
+    <!-- 사이드바 -->
+    <div id="sidebar">
+        <div id="groupName">
+            <h3>그룹</h3>
+            <p th:text="${party.partyName}"></p> <!-- 그룹 이름 표시-->
+        </div>
+        <button onclick="toggleContainer(0)">계산기</button>
+        <button onclick="toggleContainer(1)">그래프</button>
+        <button onclick="toggleContainer(2)">수식변환</button>
+        <button onclick="toggleContainer(3)">사전</button>
+        <button onclick="toggleContainer(4)">맞춤법</button>
+    </div>
+
+    <!-- 기능 컨테이너들 -->
+    <div id="containers">
+
+        <!-- 계산기 -->
+        <div class="container" id="calculator-container">
+            <div class="header">계산기</div>
+            <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+            <div class="content">
+                <div class="calculator">
+                    <div class="display-container">
+                        <input type="text" id="display" readonly placeholder="0">
+
+                    </div>
+                    <div class="tabs">
+                        <button class="tab active">기본</button>
+                        <button class="tab">대수학</button>
+                        <button class="tab">삼각법</button>
+                        <button class="tab">미적분학</button>
+                        <button class="tab">통계</button>
+                        <button class="tab">문자</button>
+                        <button class="tab">행렬</button>
+                    </div>
+                    <div class="buttons"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Graph Container -->
+
+
+        <div id="graph-container" class="container" style="display: none;">
+            <div class="header">그래프 만들기</div>
+            <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+            <div class="content">
+                <div>
+                    <label for="graphType">그래프 종류:</label>
+                    <select id="graphType">
+                        <option value="line">선 그래프</option>
+                        <option value="bar">막대 그래프</option>
+                        <option value="pie">원 그래프</option>
+                        <option value="doughnut">도넛 그래프</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="labelsInput">가로축(쉼표로 구분):</label>
+                    <input type="text" id="labelsInput" placeholder="예시 : 1월, 2월, 3월">
+                </div>
+                <div>
+                    <label for="dataInput">세로축(쉼표로 구분):</label>
+                    <input type="text" id="dataInput" placeholder="예시 : 10, 20, 15">
+                </div>
+                <button onclick="updateGraph()">만들기</button>
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+
+        <!-- 수식변환 -->
+        <div class="container" id="formula-container">
+            <div class="header">수학공식 변환기</div>
+            <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+            <p>아래 입력창에 바꿀 내용을 입력해보세요:</p>
+            <input type="text" id="formulaInput" placeholder="예시 : a^2 + b^2 = c^2">
+            <button onclick="renderFormula()">바꾸기</button>
+
+            <h2>바꾼 공식</h2>
+            <div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
+        </div>
+
+        <!-- 사전 -->
+        <div class="container" id="dictionary-container">
+            <div class="header">영어 사전</div>
+            <button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
+
+            <div>
+                <input type="text" id="word" placeholder="단어를 입력하세요..">
+                <button onclick="lookupWord()">찾기</button>
+            </div>
+            <div id="definition"></div>
+        </div>
+
+        <!-- 맞춤법 -->
+        <div class="container" id="spellcheck-container">
+            <div class="header">맞춤법 검사기</div>
+            <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+            <div>
+                <textarea id="text" rows="4" cols="50" placeholder="확인할 내용을 입력하세요..."></textarea>
+                <br>
+                <button onclick="checkSpelling()">확인하기</button>
+            </div>
+            <div id="result"></div>
+        </div>
+
+
+    </div>
+    <div id="cp-content">
+        <h1>새 게시글 쓰기</h1>
+
+        <form action="/partyBoardCreate" method="post" onsubmit="submitForm()">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <br>
+            <label for="content">Content:</label>
+            <div id="editor" style="height: 200px; border: 1px solid #ccc;"></div>
+            <textarea id="content" name="content" style="display:none;"></textarea>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
+
+    </div>
+
+</div>
+
+
 </body>
+
+<!-- 푸터 영역 -->
+<footer>
+    &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/js/container.js"></script>
+<script src="/js/calculator.js"></script>
+<script src="/js/dictionary.js"></script>
+<script src="/js/graph.js"></script>
+<script src="/js/formula.js"></script>
+<script src="/js/checkspell.js"></script>
+
+<script>
+    const quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+    function submitForm() {
+        const contentInput = document.getElementById('content');
+        contentInput.value = quill.root.innerHTML;
+    }
+</script>
+
+
 </html>
+

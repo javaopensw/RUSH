@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
+    <title>Study Village</title> <!-- 문서 제목 설정 -->
+    <!-- Font Awesome 라이브러리 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 외부 헤더 스타일 연결 -->
+    <link rel="stylesheet" href="/styles/basic/header.css">
+    <link rel="stylesheet" href="/styles/basic/nav.css">
+    <link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
+
+    <link rel="stylesheet" href="/styles/basic/footer.css">
+
+    <!--구글 폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
+
+    <style>
+        #main-layout {
+            display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
+            flex-direction: row; /* 가로 정렬 (기본값) */
+            align-items: flex-start; /* 세로 축 정렬 (위쪽 정렬) */
+            gap: 20px; /* 사이드바와 콘텐츠 사이 간격 */
+            padding: 20px; /* 내부 여백 */
+            box-sizing: border-box; /* 패딩 포함 크기 계산 */
+        }
+
+
+        footer {
+            background-color: rgba(104, 86, 82, 0.8);
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #f0e6d2;
+
+        }
+
+        /* 블러 처리된 배경 */
+        .background {
+            position: fixed; /* 화면 고정 */
+            top: 0; /* 화면 상단부터 시작 */
+            left: 0; /* 화면 왼쪽부터 시작 */
+            width: 100%; /* 화면 전체 너비 */
+            height: 100%; /* 화면 전체 높이 */
+            z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+            background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+            background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+            filter: blur(8px); /* 블러 효과 적용 */
+        }
+
+        /* 메인 콘텐츠 영역 - 기능 부분 */
+        #content {
+            margin-left: 220px; /* 사이드바 공간 확보 */
+            padding: 20px; /* 내부 여백 */
+            background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 */
+            border: 1px solid #e0e0e0; /* 테두리 */
+            border-radius: 10px; /* 둥근 모서리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            font-family: 'Georgia', serif; /* 헤더와 일관된 폰트 */
+            font-size: 16px; /* 기본 글꼴 크기 */
+            line-height: 1.5; /* 줄 간격 설정 */
+            color: #333; /* 텍스트 색상 */
+            max-width: 1000px; /* 최대 콘텐츠 너비 제한 */
+            margin: 20px auto; /* 수평 중앙 정렬 */
+            position: relative; /* 문서 흐름 */
+            top: 10px; /* 상단 간격 */
+        }
+
+        body {
+            margin: 0; /* 기본 여백 제거 */
+            padding: 0; /* 기본 패딩 제거 */
+            font-family: 'Arial', sans-serif; /* 기본 폰트 설정 */
+            color: #333; /* 기본 텍스트 색상 */
+            display: flex; /* 플렉스 컨테이너 설정 */
+            flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+        }
+
+        /* 폼 컨테이너 */
+        .page-container {
+            display: flex;
+            flex-direction: column; /* 세로 정렬 */
+            gap: 20px; /* 요소 간 간격 */
+            padding: 30px; /* 내부 여백 */
+            background-color: rgba(240, 232, 220, 0.95); /* 부드러운 배경색 */
+            border-radius: 8px; /* 둥근 모서리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            align-items: center; /* 가운데 정렬 */
+        }
+
+        /* 제목 스타일 */
+        h2 {
+            font-size: 26px; /* 제목 크기 */
+            font-weight: bold; /* 굵은 텍스트 */
+            text-align: center; /* 중앙 정렬 */
+            color: #5c4637; /* 어두운 갈색 톤 */
+            margin-bottom: 20px; /* 하단 간격 */
+            font-family: "IBM Plex Sans KR", serif;
+        }
+
+        /* 폼 스타일 */
+        form {
+            display: flex;
+            flex-direction: column; /* 세로 정렬 */
+            gap: 15px; /* 요소 간 간격 */
+            width: 100%; /* 폼 너비 */
+            max-width: 500px; /* 최대 폼 너비 */
+            font-family: "IBM Plex Sans KR", serif;
+        }
+
+        label {
+            font-weight: bold; /* 굵은 텍스트 */
+            color: #4e3d2e; /* 라벨 텍스트 색상 */
+            font-size: 16px; /* 라벨 크기 */
+        }
+
+        input[type="text"] {
+            padding: 10px; /* 내부 여백 */
+            border: 1px solid #c2b2a3; /* 테두리 */
+            border-radius: 5px; /* 둥근 모서리 */
+            font-size: 14px; /* 텍스트 크기 */
+            color: #333; /* 텍스트 색상 */
+            width: 100%; /* 입력 필드 너비 */
+        }
+
+        /* 버튼 스타일 */
+        button {
+            background-color: #5c4637; /* 버튼 배경색 */
+            color: #f5ede1; /* 텍스트 색상 */
+            font-size: 16px; /* 텍스트 크기 */
+            font-weight: bold; /* 굵은 텍스트 */
+            padding: 12px; /* 내부 여백 */
+            border: none; /* 테두리 제거 */
+            border-radius: 5px; /* 둥근 모서리 */
+            cursor: pointer; /* 포인터 */
+            transition: background-color 0.3s ease; /* 호버 효과 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 버튼 그림자 */
+            font-family: "IBM Plex Sans KR", serif;
+        }
+
+        button:hover {
+            background-color: #4e3d2e; /* 호버 시 어두운 색상 */
+        }
+
+        /* 링크 스타일 */
+        .back-link {
+            text-align: center; /* 중앙 정렬 */
+            color: #5c4637; /* 링크 색상 */
+            text-decoration: none; /* 밑줄 제거 */
+            font-weight: bold; /* 굵은 텍스트 */
+            margin-top: 20px; /* 상단 여백 */
+            font-family: "IBM Plex Sans KR", serif;
+        }
+
+        .back-link:hover {
+            text-decoration: underline; /* 호버 시 밑줄 추가 */
+        }
+    </style>
+
+
+
+</head>
+<body>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
+
+<!-- 헤더 영역 -->
+<header>
+
+    <h1>Study Village</h1> <!-- 제목 -->
+    <div class="auth-buttons">
+        <button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
+    </div>
+    <div class="profile-container">
+        <a href="/userPersonalPage" class="profile-link">
+            <i class="fas fa-user-circle profile-icon"></i>
+        </a>
+    </div>
+</header>
+
+<!-- 네비게이션 바 -->
+
+<div id="main-layout">
+
+
+    <div id="content">
+
+        <div class="page-container">
+            <!-- 제목 -->
+            <h2>새로운 마을을 생성하거나 입주해보세요</h2>
+
+            <!-- 파티 생성 폼 -->
+            <form action="/createParty" method="POST">
+                <label for="partyName">마을 이름:</label>
+                <input type="text" id="partyName" name="partyName" required>
+                <button type="submit">새로운 마을 만들기</button>
+            </form>
+
+            <!-- 파티 참가 폼 -->
+            <form action="/joinParty" method="POST">
+                <label for="partyCode">마을 코드:</label>
+                <input type="text" id="partyCode" name="party_code" required>
+                <button type="submit">마을에 입주하기</button>
+            </form>
+
+            <!-- 뒤로가기 링크 -->
+            <a href="/userPersonalPage" class="back-link">마을 입구로 돌아가기</a>
+        </div>
+
+        <!-- 여기에 기능 추가 -->
+        <!-- 여기에 기능 추가 -->
+        <!-- 여기에 기능 추가 -->
+        <!-- 여기에 기능 추가 -->
+        <!-- 여기에 기능 추가 -->
+        <!-- 여기에 기능 추가 -->
+        <!-- 여기에 기능 추가 -->
+
+    </div>
+
+</div>
+
+
+</body>
+
+<!-- 푸터 영역 -->
+<footer>
+    &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
+
+</html>

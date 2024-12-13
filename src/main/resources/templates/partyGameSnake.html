@@ -24,17 +24,17 @@
               }
 
               /* 블러 처리된 배경 */
-              .background {
-                  position: fixed; /* 화면 고정 */
-                  top: 0; /* 화면 상단부터 시작 */
-                  left: 0; /* 화면 왼쪽부터 시작 */
-                  width: 100%; /* 화면 전체 너비 */
-                  height: 100%; /* 화면 전체 높이 */
-                  z-index: -1; /* 콘텐츠보다 뒤에 위치 */
-                  background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
-                  background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
-                  filter: blur(8px); /* 블러 효과 적용 */
-              }
+     .background {
+           position: fixed; /* 화면 고정 */
+		   top: 0; /* 화면 상단부터 시작 */
+           left: 0; /* 화면 왼쪽부터 시작 */
+           width: 100%; /* 화면 전체 너비 */
+           height: 100%; /* 화면 전체 높이 */
+           z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+           background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+           background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+           filter: blur(8px); /* 블러 효과 적용 */
+      }
             
             /* 메인 콘텐츠 영역 - 기능 부분 */
             #content {
@@ -224,7 +224,7 @@ background-color: rgba(255, 255, 255, 0.85);
 border-radius: 10px; 
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 <!-- 중앙 상단 제목 -->
-<h1 style="text-align: center; font-size: 32px; color: #333; margin: 10px 0;">Snake Game</h1>
+<h1 style="text-align: center; font-size: 32px; color: #333; margin: 10px 0;">스네이크 게임</h1>
 
 <!-- 게임 캔버스 -->
 <canvas id="game-board" width="500" height="500" style="
