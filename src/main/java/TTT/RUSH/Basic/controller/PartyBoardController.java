@@ -36,7 +36,7 @@ public class PartyBoardController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             HttpSession session, Model model) {
 
-        int pageSize = 30;
+        int pageSize = 7;
         int totalPosts = boardService.getPostCountByPartyId(partyId);
         int totalPages = (int) Math.ceil((double) totalPosts / pageSize);
 
@@ -83,7 +83,7 @@ public class PartyBoardController {
             return "redirect:/partyBoardMainPage";
         }
 
-        int postsPerPage = 30;
+        int postsPerPage = 7;
         int totalPosts = boardService.getPostCountByPartyId((long)party.getPartyId());
         int totalPages = (int) Math.ceil((double) totalPosts / postsPerPage);
         List<PartyBoardPost> posts = boardService.getPostsByPartyIdAndPage((long)party.getPartyId(), page, postsPerPage);

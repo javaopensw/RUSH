@@ -1,148 +1,616 @@
-<!-- partyBoardViewPage.html -->
-
-
-
-<!-- 
-view 페이지 구현 요소 
-
-메인페이지 가기 
-
-제목
-본문
-
-수정(현재 유저가 작성자면) 
-
-삭제(현재 유저가 작성자면 + role 에 페이지 삭제 권한이 켜져 있으면) 
-
-댓글 
-
-현재 파티 게시글 리스트 
- -->
-
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Post Detail</title>
+	<meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
+	<title>Study Village</title> <!-- 문서 제목 설정 -->
+	<!-- Font Awesome 라이브러리 추가 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<!-- 외부 헤더 스타일 연결 -->
+	<link rel="stylesheet" href="/styles/basic/header.css">
+	<link rel="stylesheet" href="/styles/basic/nav.css">
+	<link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
+
+	<link rel="stylesheet" href="/styles/basic/footer.css">
+
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
+
+	<style>
+		body {
+			margin: 0;
+			display: flex;
+			flex-direction: column; /* 세로로 정렬 */
+			min-height: 100vh; /* Viewport Height 설정 */
+		}
+
+		#main-layout {
+			display: flex;
+			flex-direction: row; /* 가로 정렬 */
+			align-items: flex-start;
+			gap: 20px;
+			padding: 20px;
+			box-sizing: border-box;
+			flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+		}
+
+		footer {
+			background-color: rgba(104, 86, 82, 0.8);
+			text-align: center;
+			padding: 10px;
+			font-size: 14px;
+			color: #f0e6d2;
+		}
+
+		/* 블러 처리된 배경 */
+		.background {
+			position: fixed; /* 화면 고정 */
+			top: 0; /* 화면 상단부터 시작 */
+			left: 0; /* 화면 왼쪽부터 시작 */
+			width: 100%; /* 화면 전체 너비 */
+			height: 100%; /* 화면 전체 높이 */
+			z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+			background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+			background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+			filter: blur(8px); /* 블러 효과 적용 */
+		}
+
+		/* 메인 콘텐츠 영역 - 기능 부분 */
+		#content {
+			margin-left: 220px; /* 사이드바 공간 확보 */
+			padding: 20px; /* 내부 여백 */
+			background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 (흰색) */
+			border: 1px solid #e0e0e0; /* 얇은 테두리 추가 */
+			border-radius: 10px; /* 모서리를 둥글게 설정 */
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 추가 */
+			font-family: 'Arial', sans-serif; /* 폰트 설정 */
+			font-size: 16px; /* 기본 글꼴 크기 */
+			line-height: 1.5; /* 줄 간격 설정 */
+			color: #333; /* 텍스트 색상 설정 */
+			max-width: 1000px; /* 최대 콘텐츠 너비 제한 */
+			margin: 20px auto; /* 수평으로 가운데 정렬 */
+			position: relative; /* 기본 문서 흐름에 따라 위치 */
+			top: 10px; /* 상단에서 10px 아래로 위치 */
+			flex-grow: 1;
+			min-height: 500px;
+			overflow: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+		}
+		body {
+			margin: 0; /* 기본 여백 제거 */
+			padding: 0; /* 기본 패딩 제거 */
+			font-family: 'A`rial', sans-serif; /* 기본 폰트 설정 */
+			color: #333; /* 기본 텍스트 색상 */
+			display: flex; /* 플렉스 컨테이너 설정 */
+			flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+		}
+		/*여기에 페이지 스타일 정의 추가*/
+		/*여기에 페이지 스타일 정의 추가*/
+		/*여기에 페이지 스타일 정의 추가*/
+		/*여기에 페이지 스타일 정의 추가*/
+
+
+
+
+		/* 댓글 submit 버튼 스타일 */
+		.button_board {
+			display: inline-block;
+			padding: 8px 12px;
+			font-size: 0.90em;
+			text-decoration: none;
+			color: white;
+			background-color: rgba(106, 93, 90, 0.8);
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+
+		.button_board:hover {
+			background-color: rgba(80, 72, 70, 0.8);
+		}
+
+
+
+
+		/* 버튼 그룹 컨테이너 */
+		.button_group {
+			display: flex;
+			justify-content: space-between; /* 양쪽 정렬 */
+			align-items: center; /* 수직 정렬 */
+			margin-top: 20px; /* 상단 여백 */
+		}
+
+		/* 공통 버튼 스타일 */
+		.button_group a, .button_group button {
+			display: inline-block;
+			padding: 5px 15px;
+			font-size: 0.85em;
+			border: 1px solid transparent; /* 기본 테두리 투명 처리 */
+			border-radius: 5px;
+			text-decoration: none;
+			cursor: pointer;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+
+		/* Back to Main 버튼 스타일 */
+		.button_main {
+			background-color: rgba(106, 93, 90, 0.8);
+			color: white;
+			border: 1px solid #c58a50; /* 테두리 추가 */
+		}
+
+		.button_main:hover {
+			background-color: rgba(80, 72, 70, 0.8);
+			color: white;
+		}
+
+		/* 버튼 액션 컨테이너 */
+		.button_actions {
+			display: flex; /* 가로 정렬 */
+			gap: 10px; /* 버튼 간 간격 */
+		}
+
+		/* Edit 버튼 스타일 */
+		.button_edit {
+			background-color: rgba(106, 93, 90, 0.8); /* 초록색 배경 */
+			color: white;
+		}
+
+		.button_edit:hover {
+			background-color: rgba(80, 72, 70, 0.8);
+			color: white;
+		}
+
+		/* Delete 버튼 스타일 */
+		.button_delete {
+			background-color: #cf5151; /* 빨간색 배경 */
+			color: white;
+			border: 1px solid #e05b5b; /* 테두리 추가 */
+		}
+
+		.button_delete:hover {
+			background-color: #aa4141;
+			color: white;
+			border-color: #973636;
+		}
+
+
+
+		/* 댓글 작성 영역 스타일 */
+		.comment_form {
+			margin-top: 20px;
+		}
+
+		/* 입력창과 버튼 정렬 */
+		.input_group {
+			display: flex; /* Flexbox로 정렬 */
+			align-items: center; /* 입력창과 버튼의 수직 정렬 */
+			gap: 20px; /* 입력창과 버튼 사이 간격 */
+		}
+
+
+
+		.textarea_board {
+			width: 60%; /* 너비를 부모 요소에 맞춤 */
+			min-height: 25px; /* 최소 높이 설정 */
+			padding: 10px; /* 내부 여백 추가 */
+			font-size: 1em; /* 텍스트 크기 설정 */
+			border: 1px solid #ddd; /* 기본 테두리 색상 */
+			border-radius: 5px; /* 모서리를 둥글게 */
+			background-color: #f9f9f9; /* 부드러운 배경색 */
+			color: #333; /* 텍스트 색상 */
+			resize: vertical; /* 사용자가 세로 크기만 조정 가능 */
+			box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* 내부 그림자 추가 */
+			transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 포커스 효과에 부드러운 전환 */
+		}
+
+		.textarea_board:focus {
+			border-color: #d4a373; /* 포커스 시 테두리 색 변경 */
+			box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); /* 포커스 시 외곽선 효과 */
+			outline: none; /* 기본 포커스 테두리 제거 */
+		}
+
+		.textarea_board::placeholder {
+			color: #aaa; /* 플레이스홀더 텍스트 색상 */
+			font-style: italic; /* 플레이스홀더 텍스트 기울임 */
+		}
+
+		.post_content {
+			padding: 20px; /* 내부 여백을 추가하여 텍스트 가독성 향상 */
+			margin: 20px 0; /* 위아래 여백 추가 */
+			background-color: #f9f9f9; /* 부드러운 배경색 */
+			border: 1px solid #ddd; /* 얇은 테두리로 영역 구분 */
+			border-radius: 8px; /* 모서리를 둥글게 처리 */
+			font-size: 1em; /* 텍스트 크기 설정 */
+			line-height: 1.6; /* 줄 간격 설정으로 읽기 편하게 */
+			color: #333; /* 기본 텍스트 색상 */
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가로 입체감 */
+			overflow-wrap: break-word; /* 긴 단어나 URL 자동 줄바꿈 */
+			word-wrap: break-word; /* 오래된 브라우저 호환성을 위한 추가 */
+			font-family: "IBM Plex Sans KR", serif;
+			font-weight: 400;
+			font-style: normal;
+		}
+
+		.post_content a {
+			color: #a38262; /* 본문 내 링크 색상 */
+			text-decoration: underline; /* 링크 가독성 향상 */
+			transition: color 0.3s ease; /* 색상 변화 효과 */
+		}
+
+		.post_content a:hover {
+			color: #ac8967; /* 호버 시 색상을 조금 더 어둡게 변경 */
+		}
+
+		.post_content img {
+			max-width: 100%; /* 본문 내 이미지를 컨테이너 너비에 맞춤 */
+			height: auto; /* 이미지 비율 유지 */
+			margin: 10px 0; /* 이미지 위아래 여백 추가 */
+			border-radius: 5px; /* 이미지 모서리 둥글게 */
+		}
+
+
+
+
+
+
+		/* 댓글 전체 리스트 */
+		.comments_list {
+			margin: 20px 0;
+			padding: 0;
+			list-style: none;
+			overflow: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+		}
+
+		/* 댓글 카드 스타일 */
+		.comment_card {
+			display: flex; /* 가로 정렬 */
+			justify-content: space-between; /* 요소 간 공간 분배 */
+			align-items: center; /* 수직 정렬 */
+			background-color: #f9f9f9;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 10px 15px;
+			margin-bottom: 10px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		/* 댓글 카드 내부 요소 */
+		.comment_card > div {
+			margin: 0 10px; /* 요소 간 간격 */
+			font-size: 0.9em;
+			color: #333;
+		}
+
+		/* 댓글 ID */
+		.comment_id {
+			flex: 0.5; /* ID는 적은 공간 차지 */
+			font-weight: bold;
+			text-align: center;
+			color: #555;
+		}
+
+		/* 댓글 내용 */
+		.comment_content {
+			flex: 2; /* 댓글 내용은 넓게 차지 */
+			overflow-wrap: break-word; /* 긴 단어를 자동 줄바꿈 */
+			word-wrap: break-word; /* 오래된 브라우저 지원 */
+		}
+
+		/* 댓글 작성자 */
+		.comment_author {
+			flex: 1; /* 작성자 정보는 적은 공간 사용 */
+			font-weight: bold;
+			color: #555;
+			text-align: center;
+		}
+
+		/* 댓글 작성일 */
+		.comment_date {
+			flex: 1; /* 작성일도 적은 공간 사용 */
+			font-size: 0.8em;
+			color: #777;
+			text-align: center;
+		}
+
+		/* 댓글 삭제 버튼 */
+		.comment_actions {
+			flex: 1; /* 버튼 공간 */
+			text-align: center;
+		}
+
+		.comment_actions .button_board {
+			padding: 5px 10px;
+			font-size: 0.9em;
+			background-color: #cf5151;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		.comment_actions .button_board:hover {
+			background-color: #aa4141;
+		}
+
+
+
+		/* 작성자, 작성일 정렬 */
+		.post_info {
+			display: flex; /* Flexbox 사용 */
+			justify-content: space-between; /* 양쪽 끝에 배치 */
+			align-items: center; /* 수직 정렬 */
+			margin-bottom: 1px; /* 아래 요소와의 간격 조정 */
+			font-size: 0.9em; /* 글자 크기 확대 */
+
+		}
+
+		/* 왼쪽 텍스트 스타일 (Author) */
+		.post_info p:first-child {
+			margin: 0; /* 기본 여백 제거 */
+		}
+
+		/* 오른쪽 텍스트 스타일 (Created At) */
+		.post_info p:last-child {
+			margin: 0; /* 기본 여백 제거 */
+			text-align: right; /* 오른쪽 정렬 */
+		}
+
+		h1{
+			font-size: 27px;
+			font-family: "IBM Plex Sans KR", serif;
+			font-weight: bold;
+			font-style: normal;
+		}
+
+
+	</style>
+
+
+
 </head>
 <body>
-    <!-- 네비게이션 바 여기 이름 post 로 해둠 주위 -->
-    <div class="navbar">
-        <a th:href="@{'/partyBoardMainPage/' + ${post.partyId}}">BOARD</a>
-        <a th:href="@{'/partyGameMainPage/' + ${post.partyId}}">GAME</a>
-        <a th:href="@{'/partyChatMainPage/' + ${post.partyId}}">CHAT</a>
-        <a th:href="@{'/partyFileMainPage/' + ${post.partyId}}">FILE</a>
-        <a th:href="@{'/partySettingPage/' + ${post.partyId}}">SETTINGS</a>
-    </div>
-    <!-- 현재 파티 정보 -->
-    <div>
-        <p th:text="'Party: ' + ${party.partyName}">Party Name</p>
-        <p th:text="'Party ID: ' + ${party.partyId}">Party ID</p>
-        <p th:text="'username: ' + ${user.username}">Party ID</p>
-        <p th:text="'email: ' + ${user.email}">Party ID</p>
-    </div>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
+
+<!-- 헤더 영역 -->
+<header>
+
+	<h1>Study Village</h1> <!-- 제목 -->
+	<div class="auth-buttons">
+		<button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
+	</div>
+	<div class="profile-container">
+		<i class="fas fa-user-circle profile-icon"></i> <!-- Font Awesome 아이콘 -->
+	</div>
+</header>
+
+<!-- 네비게이션 바 -->
+<nav>
+	<a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+	<a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+	<a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+	<a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+	<a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+</nav>
+
+<div id="main-layout">
+	<!-- 사이드바 -->
+	<div id="sidebar">
+		<div id="groupName">
+			<h3>그룹</h3>
+			<p th:text="${party.partyName}"></p> <!-- 그룹 이름 표시-->
+		</div>
+		<button onclick="toggleContainer(0)">계산기</button>
+		<button onclick="toggleContainer(1)">그래프</button>
+		<button onclick="toggleContainer(2)">수식변환</button>
+		<button onclick="toggleContainer(3)">사전</button>
+		<button onclick="toggleContainer(4)">맞춤법</button>
+	</div>
+
+	<!-- 기능 컨테이너들 -->
+	<div id="containers">
+
+		<!-- 계산기 -->
+		<div class="container" id="calculator-container">
+			<div class="header">계산기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+			<div class="content">
+				<div class="calculator">
+					<div class="display-container">
+						<input type="text" id="display" readonly placeholder="0">
+
+					</div>
+					<div class="tabs">
+						<button class="tab active">기본</button>
+						<button class="tab">대수학</button>
+						<button class="tab">삼각법</button>
+						<button class="tab">미적분학</button>
+						<button class="tab">통계</button>
+						<button class="tab">문자</button>
+						<button class="tab">행렬</button>
+					</div>
+					<div class="buttons"></div>
+					<script src="calculator.js"></script>
+				</div>
+			</div>
+		</div>
 
 
-	<!--내용 -->
-    <h1 th:text="${post.title}">Post Title</h1>
-    <p><strong>Author:</strong> <span th:text="${post.author}">Author</span></p>
-    <p><strong>Created At:</strong> <span th:text="${post.createdAt}">Created At</span></p>
-    <div th:utext="${post.content}">Post Content</div>
-
-	<!--수정 -->
-	<a th:if="${user.username == post.author}" 
-	   th:href="@{'/partyBoardEditPage/' + ${post.postId}}">Edit</a>
-	<!--삭제 -->
-	<th:block th:if="${user != null and post != null and user.username == post.author}">
-	    <form action="/deletePost" method="post" style="display: inline;">
-	        <input type="hidden" name="postId" th:value="${post.postId}">
-	        <input type="hidden" name="partyId" th:value="${post.partyId}">
-	        <button type="submit" style="color: red;">Delete Post</button>
-	    </form>
-	</th:block>
-
-	<!-- 댓글 작성 -->
-	<h3>Write a Comment</h3>
-	<form action="/partyBoardComment" method="post">
-	    <textarea name="content" placeholder="Write your comment here" required></textarea>
-	    <input type="hidden" name="postId" th:value="${post.postId}">
-	    <button type="submit">Submit</button>
-	</form>
-	<!-- 댓글 목록 -->
-	<h3>Comments</h3>
-	<table>
-	    <thead>
-	        <tr>
-	            <th>Comment ID</th>
-	            <th>Content</th>
-	            <th>Author</th>
-	            <th>Created At</th>
-	            <th>Actions</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <th:block th:each="comment : ${comments}">
-	            <tr>
-	                <td th:text="${comment.commentId}">1</td>
-	                <td th:text="${comment.content}">Comment Content</td>
-	                <td th:text="${comment.author}">Author</td>
-	                <td th:text="${#dates.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</td>
-	                <td>
-	                    <th:block th:if="${comment.author == user.username}">
-	                        <form action="/partyBoardCommentDelete" method="post" style="display: inline;">
-	                            <input type="hidden" name="commentId" th:value="${comment.commentId}">
-	                            <button type="submit">Delete</button>
-	                        </form>
-	                    </th:block>
-	                </td>
-	            </tr>
-	        </th:block>
-	    </tbody>
-	</table>
-
-   <!-- 게시글 목록 -->
-	<h2>Posts</h2>
-	<table>
-	    <thead>
-	        <tr>
-	            <th>Post ID</th>
-	            <th>Title</th>
-	            <th>Author</th>
-	            <th>Created At</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <th:block th:each="post : ${posts}">
-	            <tr>
-	                <td th:text="${post.postId}">1</td>
-	                <td>
-	                    <a th:href="@{'/partyBoardViewPage/' + ${post.postId}}"
-	                       th:text="${post.title}">Post Title</a>
-	                </td>
-	                <td th:text="${post.author}">Author</td>
-	                <td th:text="${#dates.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</td>
-	            </tr>
-	        </th:block>
-	    </tbody>
-	</table>
+		<!-- Graph Container -->
+		<div id="graph-container" class="container" style="display: none;">
+			<div class="header">그래프 만들기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+			<div class="content">
+				<div>
+					<label for="graphType">그래프 종류:</label>
+					<select id="graphType">
+						<option value="line">선 그래프</option>
+						<option value="bar">막대 그래프</option>
+						<option value="pie">원 그래프</option>
+						<option value="doughnut">도넛 그래프</option>
+					</select>
+				</div>
+				<div>
+					<label for="labelsInput">가로축(쉼표로 구분):</label>
+					<input type="text" id="labelsInput" placeholder="예시 : 1월, 2월, 3월">
+				</div>
+				<div>
+					<label for="dataInput">세로축(쉼표로 구분):</label>
+					<input type="text" id="dataInput" placeholder="예시 : 10, 20, 15">
+				</div>
+				<button onclick="updateGraph()">만들기</button>
+				<canvas id="myChart" width="400" height="200"></canvas>
+			</div>
+		</div>
 
 
-    <!-- 페이징 UI -->
-    <div class="pagination" th:if="${totalPages > 1}">
-        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=1'}">맨앞으로가기</a>
+		<!-- 수식변환 -->
+		<div class="container" id="formula-container">
+			<div class="header">수학공식 변환기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
 
-        <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
-            <a th:classappend="${currentPage == i} ? 'active'" 
-               th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${i}}"
-               th:text="${i}">1</a>
-        </th:block>
+			<p>아래 입력창에 바꿀 내용을 입력해보세요:</p>
+			<input type="text" id="formulaInput" placeholder="예시 : a^2 + b^2 = c^2">
+			<button onclick="renderFormula()">바꾸기</button>
 
-        <a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${totalPages}}">맨뒤로가기</a>
-    </div>
+			<h2>바꾼 공식</h2>
+			<div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
+		</div>
+
+		<!-- 사전 -->
+		<div class="container" id="dictionary-container">
+			<div class="header">영어 사전</div>
+			<button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
+
+			<div>
+				<input type="text" id="word" placeholder="단어를 입력하세요..">
+				<button onclick="lookupWord()">찾기</button>
+			</div>
+			<div id="definition"></div>
+		</div>
+
+		<!-- 맞춤법 -->
+		<div class="container" id="spellcheck-container">
+			<div class="header">맞춤법 검사기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+			<div>
+				<textarea id="text" rows="4" cols="50" placeholder="확인할 내용을 입력하세요..."></textarea>
+				<br>
+				<button onclick="checkSpelling()">확인하기</button>
+			</div>
+			<div id="result"></div>
+		</div>
+
+
+	</div>
+	<div id="content">
+
+		<!--내용 -->
+		<h1 th:text="${post.title}">Post Title</h1>
+
+		<div class="post_info">
+			<p>작성자: <span th:text="${post.author}">Author</span></p>
+			<p><span th:text="${post.createdAt}">Created At</span></p>
+		</div>
+
+		<!--본문 -->
+		<div th:utext="${post.content}" class="post_content">Post Content</div>
+
+		<div class="button_group">
+			<!-- Back to Main 버튼 -->
+			<a th:href="@{'/partyBoardMainPage/'+  ${party.partyId}}" class="button_main">목록으로</a>
+
+			<div class="button_actions">
+				<!-- Edit 버튼 -->
+				<a th:if="${user.username == post.author}"
+				   th:href="@{'/partyBoardEditPage/' + ${post.postId}}" class="button_edit">수정</a>
+
+				<!-- Delete 버튼 -->
+				<th:block th:if="${user != null and post != null and user.username == post.author}">
+					<form action="/deletePost" method="post" style="display: inline;">
+						<input type="hidden" name="postId" th:value="${post.postId}">
+						<input type="hidden" name="partyId" th:value="${post.partyId}">
+						<button type="submit" class="button_delete">게시글 삭제</button>
+					</form>
+				</th:block>
+			</div>
+		</div>
+
+
+
+		<!-- 댓글 작성 -->
+		<h3>Write a Comment</h3>
+		<form action="/partyBoardComment" method="post" class="comment_form">
+			<div class="input_group">
+				<textarea name="content" placeholder="Write your comment here" required class="textarea_board"></textarea>
+				<button type="submit" class="button_board">게시</button>
+			</div>
+			<input type="hidden" name="postId" th:value="${post.postId}">
+		</form>
+
+		<!-- 댓글 목록 -->
+		<h3>Comments</h3>
+		<div class="comments_list">
+			<th:block th:each="comment : ${comments}">
+				<div class="comment_card">
+					<!-- 댓글 ID -->
+					<div class="comment_id" th:text="${comment.commentId}">1</div>
+					<!-- 댓글 내용 -->
+					<div class="comment_content" th:text="${comment.content}">Comment Content</div>
+					<!-- 작성자 -->
+					<div class="comment_author" th:text="${comment.author}">Author</div>
+					<!-- 작성일 -->
+					<div class="comment_date" th:text="${#dates.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</div>
+					<!-- 삭제 버튼 -->
+					<div class="comment_actions">
+						<th:block th:if="${comment.author == user.username}">
+							<form action="/partyBoardCommentDelete" method="post" style="display: inline;">
+								<input type="hidden" name="commentId" th:value="${comment.commentId}">
+								<button type="submit" class="button_board">삭제</button>
+							</form>
+						</th:block>
+					</div>
+				</div>
+			</th:block>
+		</div>
+
+
+
+
+	</div>
+</div>
+
+
 </body>
+
+<!-- 푸터 영역 -->
+<footer>
+	&copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/js/container.js"></script>
+<script src="/js/calculator.js"></script>
+<script src="/js/dictionary.js"></script>
+<script src="/js/graph.js"></script>
+<script src="/js/formula.js"></script>
+<script src="/js/checkspell.js"></script>
+
+
+
+
 </html>
-
-
 
 
 

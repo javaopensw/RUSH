@@ -83,7 +83,7 @@ public class PartyBoardPostDao {
 
     // 특정 게시글에 속한 댓글 리스트 조회
     public List<PartyBoardComment> getCommentsByPostId(Long postId) {
-        String sql = "SELECT * FROM party_board_comment WHERE post_id = ? ORDER BY created_at DESC";
+        String sql = "SELECT * FROM party_board_comment WHERE post_id = ? ORDER BY created_at ASC";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(PartyBoardComment.class), postId);
     }
     
