@@ -19,24 +19,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
 
     <style>
-        #main-layout {
-            display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
-            flex-direction: row; /* 가로 정렬 (기본값) */
-            align-items: flex-start; /* 세로 축 정렬 (위쪽 정렬) */
-            gap: 20px; /* 사이드바와 콘텐츠 사이 간격 */
-            padding: 20px; /* 내부 여백 */
-            box-sizing: border-box; /* 패딩 포함 크기 계산 */
-        }
+		html {
+		   height: 100%; /* 화면 전체를 차지하도록 설정 */
+		   margin: 0; /* 기본 여백 제거 */
+		   padding: 0; /* 기본 패딩 제거 */
+		}
+
+		body {
+
+			height: 100%; /* 화면 전체를 차지하도록 설정 */
+		    margin: 0; /* 기본 여백 제거 */
+		    padding: 0; /* 기본 패딩 제거 */
+		    font-family: 'Arial', sans-serif; /* 기본 폰트 설정 */
+		    color: #333; /* 기본 텍스트 색상 */
+		    display: flex; /* 플렉스 컨테이너 설정 */
+		    flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+		}
+
+		#main-layout {
+			flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+			height: 100%; /* 화면 전체를 차지하도록 설정 */
+		    display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
+		    flex-direction: row; /* 가로 정렬 (기본값) */
+		    align-items: flex-start; /* 세로 축 정렬 (위쪽 정렬) */
+		    gap: 20px; /* 사이드바와 콘텐츠 사이 간격 */
+		    padding: 20px; /* 내부 여백 */
+		    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+		}
 
 
-        footer {
-            background-color: rgba(104, 86, 82, 0.8);
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            color: #f0e6d2;
+		footer {
+		    background-color: rgba(104, 86, 82, 0.8);
+		    text-align: center;
+		    padding: 10px;
+		    font-size: 14px;
+		    color: #f0e6d2;
 
-        }
+		}
 
         /* 블러 처리된 배경 */
         .background {
@@ -53,7 +72,6 @@
 
         /* 메인 콘텐츠 영역 - 기능 부분 */
         #content {
-            margin-left: 220px; /* 사이드바 공간 확보 */
             padding: 20px; /* 내부 여백 */
             background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 */
             border: 1px solid #e0e0e0; /* 테두리 */
@@ -63,19 +81,9 @@
             font-size: 16px; /* 기본 글꼴 크기 */
             line-height: 1.5; /* 줄 간격 설정 */
             color: #333; /* 텍스트 색상 */
-            max-width: 1000px; /* 최대 콘텐츠 너비 제한 */
             margin: 20px auto; /* 수평 중앙 정렬 */
             position: relative; /* 문서 흐름 */
             top: 10px; /* 상단 간격 */
-        }
-
-        body {
-            margin: 0; /* 기본 여백 제거 */
-            padding: 0; /* 기본 패딩 제거 */
-            font-family: 'Arial', sans-serif; /* 기본 폰트 설정 */
-            color: #333; /* 기본 텍스트 색상 */
-            display: flex; /* 플렉스 컨테이너 설정 */
-            flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
         }
 
         /* 폼 컨테이너 */
@@ -83,7 +91,7 @@
             display: flex;
             flex-direction: column; /* 세로 정렬 */
             gap: 20px; /* 요소 간 간격 */
-            padding: 30px; /* 내부 여백 */
+            padding: 10px; /* 내부 여백 */
             background-color: rgba(240, 232, 220, 0.95); /* 부드러운 배경색 */
             border-radius: 8px; /* 둥근 모서리 */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
@@ -180,8 +188,6 @@
 		</div>
 </header>
 
-<!-- 네비게이션 바 -->
-
 <div id="main-layout">
 
 
@@ -209,13 +215,6 @@
             <a href="/userPersonalPage" class="back-link">마을 입구로 돌아가기</a>
         </div>
 
-        <!-- 여기에 기능 추가 -->
-        <!-- 여기에 기능 추가 -->
-        <!-- 여기에 기능 추가 -->
-        <!-- 여기에 기능 추가 -->
-        <!-- 여기에 기능 추가 -->
-        <!-- 여기에 기능 추가 -->
-        <!-- 여기에 기능 추가 -->
 
     </div>
 
@@ -230,3 +229,4 @@
 </footer>
 
 </html>
+
