@@ -21,14 +21,30 @@
 
 
     <style>
-        #main-layout {
-            display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
-            flex-direction: row; /* 가로 정렬 */
-            align-items: flex-start; /* 세로 축 정렬 */
-            gap: 20px; /* 사이드바와 콘텐츠 사이 간격 */
-            padding: 20px;
-            box-sizing: border-box;
-        }
+		body {
+		    margin: 0;
+		    display: flex;
+		    flex-direction: column; /* 세로로 정렬 */
+		    min-height: 100vh; /* Viewport Height 설정 */
+		}
+
+		#main-layout {
+		    display: flex;
+		    flex-direction: row; /* 가로 정렬 */
+		    align-items: flex-start;
+		    gap: 20px;
+		    padding: 20px;
+		    box-sizing: border-box;
+		    flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+		}
+
+		footer {
+		    background-color: rgba(104, 86, 82, 0.8);
+		    text-align: center;
+		    padding: 10px;
+		    font-size: 14px;
+		    color: #f0e6d2;
+		}
 
         /* 블러 처리된 배경 */
         .background {
@@ -267,9 +283,11 @@
     <div class="auth-buttons">
         <button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
     </div>
-    <div class="profile-container">
-        <i class="fas fa-user-circle profile-icon"></i> <!-- Font Awesome 아이콘 -->
-    </div>
+	<div class="profile-container">
+			<a href="/userPersonalPage" class="profile-link">
+				<i class="fas fa-user-circle profile-icon"></i>
+			</a>
+		</div>
 </header>
 
 

@@ -385,7 +385,9 @@
 		<button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
 	</div>
 	<div class="profile-container">
-		<i class="fas fa-user-circle profile-icon"></i> <!-- Font Awesome 아이콘 -->
+		<a href="/userPersonalPage" class="profile-link">
+			<i class="fas fa-user-circle profile-icon"></i>
+		</a>
 	</div>
 </header>
 
@@ -436,7 +438,6 @@
 						<button class="tab">행렬</button>
 					</div>
 					<div class="buttons"></div>
-					<script src="calculator.js"></script>
 				</div>
 			</div>
 		</div>
@@ -546,17 +547,17 @@
 
 
 		<!-- 댓글 작성 -->
-		<h3>Write a Comment</h3>
+		<h3>댓글 작성하기</h3>
 		<form action="/partyBoardComment" method="post" class="comment_form">
 			<div class="input_group">
-				<textarea name="content" placeholder="Write your comment here" required class="textarea_board"></textarea>
+				<textarea name="content" placeholder="여기에 댓글을 작성하세요" required class="textarea_board"></textarea>
 				<button type="submit" class="button_board">게시</button>
 			</div>
 			<input type="hidden" name="postId" th:value="${post.postId}">
 		</form>
 
 		<!-- 댓글 목록 -->
-		<h3>Comments</h3>
+		<h3>댓글</h3>
 		<div class="comments_list">
 			<th:block th:each="comment : ${comments}">
 				<div class="comment_card">
