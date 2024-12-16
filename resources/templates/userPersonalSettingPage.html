@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
+    <title>Study Village</title> <!-- 문서 제목 설정 -->
+    <!-- Font Awesome 라이브러리 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 외부 헤더 스타일 연결 -->
+    <link rel="stylesheet" href="/styles/basic/header.css">
+    <link rel="stylesheet" href="/styles/basic/nav.css">
+    <link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
+
+    <link rel="stylesheet" href="/styles/basic/footer.css">
+
+    <!--구글 폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
+
+
+    <style>
+        #main-layout {
+            display: flex; /* Flexbox를 사용해 자식 요소들을 가로로 정렬 */
+            flex-direction: row; /* 가로 정렬 */
+            align-items: flex-start; /* 세로 축 정렬 */
+            gap: 20px; /* 사이드바와 콘텐츠 사이 간격 */
+            padding: 20px;
+            box-sizing: border-box;
+         flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+        }
+
+        /* 블러 처리된 배경 */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('/images/image.png') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(8px);
+        }
+
+        /* 메인 콘텐츠 영역 */
+        #content {
+            margin-left: 220px;
+            padding: 30px; /* 내부 여백 증가 */
+            background-color: rgba(255, 255, 255, 0.9); /* 조금 더 밝은 배경색 */
+            border: 2px solid #e0e0e0; /* 테두리 두께 증가 */
+            border-radius: 15px; /* 더 둥근 모서리 */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 그림자 강화 */
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.6; /* 줄 간격 약간 증가 */
+            color: #333;
+            max-width: 900px;
+            margin: 20px auto;
+            position: relative;
+            top: 10px;
+            flex-grow: 1;
+            height: 500px; /* 고정 높이 */
+            overflow-y: auto; /* 세로 스크롤 활성화 */
+            overflow-x: hidden; /* 가로 스크롤 비활성화 */
+            font-family: "IBM Plex Sans KR", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+      
+      body {
+         height: 100%; /* 화면 전체를 차지하도록 설정 */
+          margin: 0; /* 기본 여백 제거 */
+          padding: 0; /* 기본 패딩 제거 */
+          font-family: 'A`rial', sans-serif; /* 기본 폰트 설정 */
+          color: #333; /* 기본 텍스트 색상 */
+          display: flex; /* 플렉스 컨테이너 설정 */
+          flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+      }
+      html {
+         height: 100%; /* 화면 전체를 차지하도록 설정 */
+         margin: 0; /* 기본 여백 제거 */
+         padding: 0; /* 기본 패딩 제거 */
+      }
+
+        /* 기본 제목 스타일 */
+        /* 기본 제목 스타일 */
+        /* 기본 제목 스타일 */
+        h2 {
+            font-size: 27px; /* 제목 크기 증가 */
+            color: #4e3d2e; /* 차분한 색상 */
+            font-weight: bold;
+            text-align: left; /* 왼쪽 정렬 */
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #5c4637;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            background-color: rgba(106, 93, 90, 0.8);
+            width: 100%; /* 전체 너비 */
+            margin: 20px 0;
+        }
+
+        /* 일반 텍스트 스타일 */
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* 파티 목록 스타일 */
+        ul {
+            list-style: none; /* 불릿 제거 */
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.8); /* 파티 항목 배경 */
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        li a {
+            font-weight: bold;
+            text-decoration: none;
+            color: #4e3d2e;
+            font-size: 16px;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        /* 공통 버튼 스타일 */
+        .button-link, .button-delete {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 8px; /* 둥근 모서리 */
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Go to Party 버튼 */
+        .button-link {
+            background-color: rgba(106, 93, 90, 0.8); /* 메인 색상 */
+            color: #fff; /* 텍스트 색상 */
+        }
+
+        .button-link:hover {
+            background-color: rgba(133, 101, 92, 0.8); /* 호버 색상 */
+            transform: scale(1.05); /* 확대 효과 */
+        }
+
+        /* Delete 버튼 */
+        .button-delete {
+            background-color: rgba(223, 89, 89, 0.8); /* 삭제 버튼 색상 */
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+        }
+
+        .button-delete:hover {
+            background-color: rgba(200, 70, 70, 0.9); /* 호버 색상 */
+            transform: scale(1.05); /* 확대 효과 */
+        }
+
+        /* 카드 그리드 레이아웃 */
+        .party-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 반응형 카드 레이아웃 */
+            gap: 20px; /* 카드 간격 */
+            margin-top: 20px; /* 상단 여백 */
+        }
+
+        /* 파티 카드 스타일 */
+        .party-card {
+            background-color: rgba(255, 255, 255, 0.9); /* 카드 배경색 */
+            border: 1px solid #ddd; /* 카드 테두리 */
+            border-radius: 10px; /* 둥근 모서리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+            padding: 15px; /* 내부 여백 */
+            text-align: center; /* 중앙 정렬 */
+            font-family: 'Arial', sans-serif; /* 폰트 설정 */
+            font-size: 14px; /* 기본 글자 크기 */
+        }
+
+        /* 파티 이름 스타일 */
+        .party-name {
+            font-size: 16px; /* 이름 크기 */
+            font-weight: bold; /* 굵은 글씨 */
+            color: #333; /* 텍스트 색상 */
+            margin-bottom: 10px; /* 버튼과 간격 */
+            word-wrap: break-word; /* 긴 이름 줄바꿈 */
+        }
+
+        /* 작은 버튼 스타일 */
+        .button-small {
+            display: inline-block;
+            padding: 8px 12px; /* 작은 크기 */
+            background-color: rgba(106, 93, 90, 0.8); /* 메인 색상 */
+            color: #fff;
+            border: none;
+            border-radius: 6px; /* 둥근 모서리 */
+            font-size: 12px; /* 작은 폰트 크기 */
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px; /* 상단 여백 */
+        }
+
+        .button-small:hover {
+            background-color: rgba(133, 101, 92, 0.8); /* 호버 색상 */
+        }
+
+        /* 동일한 버튼 크기 조정 */
+        .button-party {
+            display: inline-block;
+            width: 100px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            background-color: rgba(106, 93, 90, 0.8);
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            float: right;
+            margin-bottom: 10px;
+        }
+
+        .button-party:hover {
+            background-color: rgba(133, 101, 92, 0.8);
+        }
+
+
+        /*여기에 페이지 스타일 추가*/
+        /*여기에 페이지 스타일 추가*/
+        /*여기에 페이지 스타일 추가*/
+        /*여기에 페이지 스타일 추가*/
+    </style>
+
+
+
+</head>
+<body>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
+
+<!-- 헤더 영역 -->
+<header>
+
+    <h1>Study Village</h1> <!-- 제목 -->
+    <div class="auth-buttons">
+        <button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
+    </div>
+    <div class="profile-container">
+        <a href="/userPersonalPage" class="profile-link">
+            <i class="fas fa-user-circle profile-icon"></i>
+        </a>
+    </div>
+</header>
+
+
+<div id="main-layout">
+    <div id="content">
+        <h2>나의 정보</h2>
+        <hr>
+
+
+        <p>Username: <span th:text="${user.username}"></span></p>
+        <p>Email: <span th:text="${user.email}"></span></p>
+        <p>Created At: <span th:text="${user.createdAt}"></span></p>
+
+        <a href="/userPersonalInfoEditPage" class="button-party">내 정보 수정하기</a>
+
+        <hr>
+
+        <h3>마을 관리</h3>
+
+        <!-- 카드 레이아웃 -->
+        <div class="party-grid">
+            <div th:each="party : ${parties}" class="party-card">
+                <p class="party-name" th:text="${party.partyName}"></p>
+                <a th:href="'/partyBoardMainPage/' + ${party.partyId}" class="button-link">방문하기</a>
+                <form th:action="@{/deleteParty}" method="post" style="display:inline;">
+                    <input type="hidden" name="partyId" th:value="${party.partyId}">
+                    <button type="submit" class="button-delete">나가기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+
+<!-- 푸터 영역 -->
+<footer>
+    &copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
+
+</html>

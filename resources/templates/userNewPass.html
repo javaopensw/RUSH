@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password</title>
+    <!-- CSS 파일 포함 -->
+    <link rel="stylesheet" href="/images/joinstyles.css">
+    <link rel="stylesheet" href="/images/Header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!--구글 폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
+</head>
+<header style="position: fixed; top: 0; left: 0; width: 98%; z-index: 1000;">
+    <h1>Study Village</h1>
+    <div class="auth-buttons">
+        <!-- 로그인 버튼 -->
+        <button onclick="window.location.href='/login';">Login</button>
+        <!-- 회원가입 버튼 -->
+        <button onclick="window.location.href='/userCreate';">Sign Up</button>
+    </div>
+</header>
+<body>
+<div class="background"></div>
+<div class="container">
+    <h2>비밀번호 재설정</h2>
+    <form action="/updatePassword" method="POST">
+        <input type="hidden" name="id" th:value="${user.id}">
+
+        <label for="password"></label>
+        <input type="password" id="password" name="password" placeholder="Enter your new password" required>
+        <br>
+
+        <button type="submit" class="btn">Reset Password</button>
+    </form>
+    <p>
+        <a href="/index">Back to Index</a>
+    </p>
+</div>
+</body>
+</html>

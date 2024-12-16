@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"> <!-- 문서의 문자 인코딩을 UTF-8로 설정 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 모바일 친화적인 화면 비율 설정 -->
+	<title>Study Village</title> <!-- 문서 제목 설정 -->
+	<!-- Font Awesome 라이브러리 추가 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<!-- 외부 헤더 스타일 연결 -->
+	<link rel="stylesheet" href="/styles/basic/header.css">
+	<link rel="stylesheet" href="/styles/basic/nav.css">
+	<link rel="stylesheet" href="/styles/basic/toolBarStyle.css">
+	<link rel="stylesheet" href="/styles/basic/footer.css">
+
+	<!--구글 폰트-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Orbit&display=swap" rel="stylesheet">
+
+
+	<style>
+		body {
+			margin: 0;
+			display: flex;
+			flex-direction: column; /* 세로로 정렬 */
+			min-height: 100vh; /* Viewport Height 설정 */
+		}
+
+		#main-layout {
+			display: flex;
+			flex-direction: row; /* 가로 정렬 */
+			align-items: flex-start;
+			gap: 20px;
+			padding: 20px;
+			box-sizing: border-box;
+			flex: 1; /* 남은 공간을 채워서 footer를 아래로 밀도록 설정 */
+		}
+
+		footer {
+			background-color: rgba(104, 86, 82, 0.8);
+			text-align: center;
+			padding: 10px;
+			font-size: 14px;
+			color: #f0e6d2;
+		}
+
+		/* 블러 처리된 배경 */
+		.background {
+			position: fixed; /* 화면 고정 */
+			top: 0; /* 화면 상단부터 시작 */
+			left: 0; /* 화면 왼쪽부터 시작 */
+			width: 100%; /* 화면 전체 너비 */
+			height: 100%; /* 화면 전체 높이 */
+			z-index: -1; /* 콘텐츠보다 뒤에 위치 */
+			background: url('/images/image.png') no-repeat center center fixed; /* 이미지 배치 및 고정 */
+			background-size: cover; /* 배경 이미지를 화면에 맞게 확장 */
+			filter: blur(8px); /* 블러 효과 적용 */
+		}
+
+		/* 메인 콘텐츠 영역 - 기능 부분 */
+		#content {
+			margin-left: 220px; /* 사이드바 공간 확보 */
+			padding: 20px; /* 내부 여백 */
+			background-color: rgba(255, 255, 255, 0.85); /* 배경색 설정 (흰색) */
+			border: 1px solid #e0e0e0; /* 얇은 테두리 추가 */
+			border-radius: 10px; /* 모서리를 둥글게 설정 */
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 추가 */
+			font-family: 'Arial', sans-serif; /* 폰트 설정 */
+			font-size: 16px; /* 기본 글꼴 크기 */
+			line-height: 1.5; /* 줄 간격 설정 */
+			color: #333; /* 텍스트 색상 설정 */
+			max-width: 1000px; /* 최대 콘텐츠 너비 제한 */
+			margin: 20px auto; /* 수평으로 가운데 정렬 */
+			position: relative; /* 기본 문서 흐름에 따라 위치 */
+			top: 10px; /* 상단에서 10px 아래로 위치 */
+			flex-grow: 1;
+			height: 500px;
+		}
+		body {
+			margin: 0; /* 기본 여백 제거 */
+			padding: 0; /* 기본 패딩 제거 */
+			font-family: 'A`rial', sans-serif; /* 기본 폰트 설정 */
+			color: #333; /* 기본 텍스트 색상 */
+			display: flex; /* 플렉스 컨테이너 설정 */
+			flex-direction: column; /* 상단에서 아래로 콘텐츠 배치 */
+		}
+
+		#content table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 20px 0;
+			font-size: 1em; /* 글자 크기 */
+			text-align: left;
+			background-color: rgba(255, 255, 255, 0.8); /* 부드러운 배경 */
+			border-radius: 12px; /* 모서리를 둥글게 */
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 입체감 */
+			overflow: hidden;
+			border: 1px solid rgba(0, 0, 0, 0.1); /* 테두리 추가 */
+		}
+
+		/* 테이블 헤더 */
+		#content thead {
+			background-color: rgba(106, 93, 90, 0.8); /* 메인 색상 */
+			color: #fff; /* 헤더 텍스트 색상 */
+			font-weight: bold;
+			text-transform: uppercase; /* 텍스트를 대문자로 */
+			border-bottom: 2px solid rgba(0, 0, 0, 0.2); /* 헤더 아래 구분선 */
+		}
+
+		/* 테이블 셀 */
+		#content th, #content td {
+			padding: 10px 12px; /* 내부 여백 */
+			font-size: 0.9em; /* 글자 크기 */
+			line-height: 1.6; /* 줄 간격 */
+			color: #fff; /* 모든 텍스트를 하얀색으로 */
+			background-color: rgba(106, 93, 90, 0.8); /* 셀 배경색 통일 */
+			border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* 행 구분선 */
+			font-family: "IBM Plex Sans KR", serif;
+			font-weight: 400;
+			font-style: normal;
+		}
+
+		/* 마지막 행 구분선 제거 */
+		#content tr:last-child td {
+			border-bottom: none;
+		}
+
+		/* 새로운 게시글 적기 링크 */
+		#content a {
+			text-decoration: underline; /* 밑줄 추가 */
+			color: rgba(255, 247, 245, 0.8); /* 링크도 하얀색 */
+			font-weight: bold;
+		}
+
+		#content a:hover {
+			color: #bab5b0; /* 호버 시 색상 변경 */
+		}
+
+		/* 페이징 UI */
+		#content .pagination {
+			margin: 20px 0;
+			text-align: center;
+			font-size: 0.9em;
+		}
+
+		/* 페이징 텍스트 링크 */
+		#content .pagination a {
+			margin: 0 5px;
+			color: rgba(106, 93, 90, 0.8); /* 메인 색상 */
+			text-decoration: underline; /* 밑줄 추가 */
+			font-weight: normal;
+			background: none; /* 버튼 스타일 제거 */
+			border: none; /* 테두리 제거 */
+			cursor: pointer; /* 클릭 가능한 링크처럼 보이도록 설정 */
+			transition: color 0.3s ease;
+		}
+
+		#content .pagination a:hover {
+			color: #c58a50; /* 호버 시 색상 변경 */
+		}
+
+		#content .pagination a.active {
+			color: rgba(189, 75, 50, 0.8); /* 활성화된 링크 */
+			pointer-events: none;
+			text-decoration: underline; /* 밑줄  */
+		}
+
+		/* "처음으로"와 "맨뒤로" 링크 스타일 */
+		#content .pagination a:first-child,
+		#content .pagination a:last-child {
+			font-weight: bold;
+			text-decoration: underline;
+			color: rgba(106, 93, 90, 0.8); /* 메인 색상 */
+		}
+
+		#content .pagination a:first-child:hover,
+		#content .pagination a:last-child:hover {
+			color: #938d87; /* 호버 색상 */
+			text-decoration: underline;
+		}
+		/* button_create 클래스에만 적용 */
+		.button_create {
+			text-decoration: underline; /* 밑줄 추가 */
+			color: rgba(80, 72, 70, 0.8) !important; /* 메인 색상 */
+			font-weight: bold;
+			font-size: 0.85em;
+			margin-bottom: 10px;
+			margin-top: 10px;
+			float: right; /* 오른쪽으로 정렬 */
+		}
+		/* 제목인 "게시판" 스타일 */
+		h5 {
+			margin-top: 30px;
+			margin-bottom: 5px;
+			font-size: 26px;
+			font-family: "IBM Plex Sans KR", serif;
+			font-weight: bold;
+			font-style: normal;
+		}
+	</style>
+</head>
+<body>
+<!-- 블러 처리된 배경 -->
+<div class="background"></div>
+<!-- 헤더 영역 -->
+<header>
+
+	<h1>Study Village</h1> <!-- 제목 -->
+	<div class="auth-buttons">
+		<button onclick="window.location.href='/index';">Logout</button> <!-- 로그아웃 버튼 -->
+	</div>
+	<div class="profile-container">
+		<a href="/userPersonalPage" class="profile-link">
+			<i class="fas fa-user-circle profile-icon"></i>
+		</a>
+	</div>
+</header>
+<!-- 네비게이션 바 -->
+<nav>
+	<a th:href="@{'/partyBoardMainPage/' + ${party.partyId}}">BOARD</a>
+	<a th:href="@{'/partyGameMainPage/' + ${party.partyId}}">GAME</a>
+	<a th:href="@{'/partyChatMainPage/' + ${party.partyId}}">CHAT</a>
+	<a th:href="@{'/partyFileMainPage/' + ${party.partyId}}">FILE</a>
+	<a th:href="@{'/partySettingPage/' + ${party.partyId}}">SETTINGS</a>
+</nav>
+
+<div id="main-layout">
+	<!-- 사이드바 -->
+	<div id="sidebar">
+		<div id="groupName">
+			<h3>그룹</h3>
+			<p th:text="${party.partyName}"></p> <!-- 그룹 이름 표시-->
+		</div>
+		<button onclick="toggleContainer(0)">계산기</button>
+		<button onclick="toggleContainer(1)">그래프</button>
+		<button onclick="toggleContainer(2)">수식변환</button>
+		<button onclick="toggleContainer(3)">사전</button>
+		<button onclick="toggleContainer(4)">맞춤법</button>
+	</div>
+	<!-- 기능 컨테이너들 -->
+	<div id="containers">
+		<!-- 계산기 -->
+		<div class="container" id="calculator-container">
+			<div class="header">계산기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+			<div class="content">
+				<div class="calculator">
+					<div class="display-container">
+						<input type="text" id="display" readonly placeholder="0">
+					</div>
+					<div class="tabs">
+						<button class="tab active">기본</button>
+						<button class="tab">대수학</button>
+						<button class="tab">삼각법</button>
+						<button class="tab">미적분학</button>
+						<button class="tab">통계</button>
+						<button class="tab">문자</button>
+						<button class="tab">행렬</button>
+					</div>
+					<div class="buttons"></div>
+				</div>
+			</div>
+		</div>
+		<!-- Graph Container -->
+		<div id="graph-container" class="container" style="display: none;">
+			<div class="header">그래프 만들기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+			<div class="content">
+				<div>
+					<label for="graphType">그래프 종류:</label>
+					<select id="graphType">
+						<option value="line">선 그래프</option>
+						<option value="bar">막대 그래프</option>
+						<option value="pie">원 그래프</option>
+						<option value="doughnut">도넛 그래프</option>
+					</select>
+				</div>
+				<div>
+					<label for="labelsInput">가로축(쉼표로 구분):</label>
+					<input type="text" id="labelsInput" placeholder="예시 : 1월, 2월, 3월">
+				</div>
+				<div>
+					<label for="dataInput">세로축(쉼표로 구분):</label>
+					<input type="text" id="dataInput" placeholder="예시 : 10, 20, 15">
+				</div>
+				<button onclick="updateGraph()">만들기</button>
+				<canvas id="myChart" width="400" height="200"></canvas>
+			</div>
+		</div>
+		<!-- 수식변환 -->
+		<div class="container" id="formula-container">
+			<div class="header">수학공식 변환기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+			<p>아래 입력창에 바꿀 내용을 입력해보세요:</p>
+			<input type="text" id="formulaInput" placeholder="예시 : a^2 + b^2 = c^2">
+			<button onclick="renderFormula()">바꾸기</button>
+			<h2>바꾼 공식</h2>
+			<div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
+		</div>
+		<!-- 사전 -->
+		<div class="container" id="dictionary-container">
+			<div class="header">영어 사전</div>
+			<button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
+			<div>
+				<input type="text" id="word" placeholder="단어를 입력하세요..">
+				<button onclick="lookupWord()">찾기</button>
+			</div>
+			<div id="definition"></div>
+		</div>
+		<!-- 맞춤법 -->
+		<div class="container" id="spellcheck-container">
+			<div class="header">맞춤법 검사기</div>
+			<button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+			<div>
+				<textarea id="text" rows="4" cols="50" placeholder="확인할 내용을 입력하세요..."></textarea>
+				<br>
+				<button onclick="checkSpelling()">확인하기</button>
+			</div>
+			<div id="result"></div>
+		</div>
+	</div>
+	<div id="content">
+		<!-- 게시글 목록 -->
+		<h5>게시판</h5>
+		<a href="/partyBoardCreatePage" class="button_create">새 게시글쓰기</a>
+		<table>
+			<thead>
+			<tr>
+				<th>Post ID</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Created At</th>
+			</tr>
+			</thead>
+			<tbody>
+			<th:block th:each="post : ${posts}">
+				<tr>
+					<!-- 변경된 줄  -->
+					<td>
+						<a id="postIdCell" th:text="${post.postId}"
+						   th:href="@{'/partyBoardViewPage/' + ${post.postId}}" style="text-decoration: none; color: inherit;">Post id</a>
+
+
+					</td>
+					<td>
+						<a th:href="@{'/partyBoardViewPage/' + ${post.postId}}"
+						   th:text="${post.title}" style="text-decoration: none; color: inherit;">Post Title</a>
+
+					</td>
+					<td th:text="${post.author}">Author</td>
+					<td th:text="${#dates.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</td>
+				</tr>
+			</th:block>
+			</tbody>
+		</table>
+		<!-- 페이징 UI -->
+		<div class="pagination" th:if="${totalPages > 1}">
+			<a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=1'}">처음으로</a>
+
+			<th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+				<a th:classappend="${currentPage == i} ? 'active'"
+				   th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${i}}"
+				   th:text="${i}">1</a>
+			</th:block>
+
+			<a th:href="@{'/partyBoardMainPage/' + ${party.partyId} + '?page=' + ${totalPages}}">맨뒤로</a>
+		</div>
+	</div>
+</div>
+
+
+</body>
+
+<!-- 푸터 영역 -->
+<footer>
+	&copy; 2024 Study Village. All rights reserved. <!-- 푸터 텍스트 -->
+</footer>
+
+<!--추가된 스크립트-->
+<script>
+	// 페이지 로드 후 postId에 대해 5자리로 포맷팅 처리
+	window.addEventListener('DOMContentLoaded', function () {
+		var postIdCells = document.querySelectorAll('[id="postIdCell"]'); // 모든 postIdCell 요소를 가져옴
+		postIdCells.forEach(function(cell) {
+			// 각 postId 값을 가져와서 5자리로 포맷팅
+			var postId = parseInt(cell.textContent, 10); // 숫자로 변환
+			var formattedPostId = postId.toString().padStart(5, '0'); // 5자리로 포맷팅
+			cell.textContent = formattedPostId; // 포맷된 값 설정
+		});
+	});
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="/js/container.js"></script>
+<script src="/js/calculator.js"></script>
+<script src="/js/dictionary.js"></script>
+<script src="/js/graph.js"></script>
+<script src="/js/formula.js"></script>
+<script src="/js/checkspell.js"></script>
+
+
+
+
+</html>

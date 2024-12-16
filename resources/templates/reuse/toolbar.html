@@ -1,0 +1,113 @@
+
+	<div id="sidebar">
+	    <div id="groupName">
+	        <h3>그룹</h3>
+	    </div>
+	    <button onclick="toggleContainer(0)">계산기</button>
+	    <button onclick="toggleContainer(1)">그래프</button>
+	    <button onclick="toggleContainer(2)">수식변환</button>
+	    <button onclick="toggleContainer(3)">사전</button>
+	    <button onclick="toggleContainer(4)">맞춤법</button>
+	</div>
+	
+
+	    <!-- 기능 컨테이너들 -->
+	<div id="containers">
+
+	<!-- 계산기 -->
+	<div class="container" id="calculator-container">
+	    <div class="header">계산기</div>
+	    <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+	    <div class="content">
+	        <div class="calculator">
+	            <div class="display-container">
+	                <input type="text" id="display" readonly placeholder="0">
+	                
+	            </div>
+	            <div class="tabs">
+	                <button class="tab active">기본</button>
+	                <button class="tab">대수학</button>
+	                <button class="tab">삼각법</button>
+	                <button class="tab">미적분학</button>
+	                <button class="tab">통계</button>
+	                <button class="tab">문자</button>
+	                <button class="tab">행렬</button>
+	            </div>
+	            <div class="buttons"></div>
+	        </div>
+	    </div>
+	</div>
+
+
+	 <!-- Graph Container -->
+	 
+
+	 <div id="graph-container" class="container" style="display: none;">
+	    <div class="header">그래프 만들기</div>
+	    <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+	    <div class="content">
+	        <div>
+	            <label for="graphType">그래프 종류:</label>
+	            <select id="graphType">
+	                <option value="line">선 그래프</option>
+	                <option value="bar">막대 그래프</option>
+	                <option value="pie">원 그래프</option>
+	                <option value="doughnut">도넛 그래프</option>
+	            </select>
+	        </div>
+	        <div>
+	            <label for="labelsInput">가로축(쉼표로 구분):</label>
+	            <input type="text" id="labelsInput" placeholder="예시 : 1월, 2월, 3월">
+	        </div>
+	        <div>
+	            <label for="dataInput">세로축(쉼표로 구분):</label>
+	            <input type="text" id="dataInput" placeholder="예시 : 10, 20, 15">
+	        </div>
+	        <button onclick="updateGraph()">만들기</button>
+	        <canvas id="myChart" width="400" height="200"></canvas>
+	    </div>
+	</div>
+
+
+	 <!-- 수식변환 -->
+	<div class="container" id="formula-container">
+	    <div class="header">수학공식 변환기</div>
+	    <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+	    <p>아래 입력창에 바꿀 내용을 입력해보세요:</p>
+	    <input type="text" id="formulaInput" placeholder="예시 : a^2 + b^2 = c^2">
+	     <button onclick="renderFormula()">바꾸기</button>
+
+	    <h2>바꾼 공식</h2>
+	    <div id="output" style="margin-top: 20px; font-size: 20px; color: #333;"></div>
+	</div>
+
+	<!-- 사전 -->
+	    <div class="container" id="dictionary-container">
+	       <div class="header">영어 사전</div>
+	       <button class="close-btn" onclick="document.getElementById('dictionary-container').style.display='none'">x</button>
+	   
+	       <div>
+	           <input type="text" id="word" placeholder="단어를 입력하세요..">
+	           <button onclick="lookupWord()">찾기</button>
+	       </div>
+	       <div id="definition"></div>
+	   </div>
+
+	 <!-- 맞춤법 -->
+	<div class="container" id="spellcheck-container">
+	    <div class="header">맞춤법 검사기</div>
+	    <button class="close-btn" onclick="document.getElementById('graph-container').style.display='none'">x</button>
+
+	    <div>
+	        <textarea id="text" rows="4" cols="50" placeholder="확인할 내용을 입력하세요..."></textarea>
+	        <br>
+	        <button onclick="checkSpelling()">확인하기</button>
+	    </div>
+	    <div id="result"></div>
+	</div>
+	
+
+
+
